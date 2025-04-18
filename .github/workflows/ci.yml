@@ -1,18 +1,20 @@
+# Github Pages로 정적 컨텐츠 배포 워크플로우
 name: Deploy static content to Pages
 
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
 
+# 워크플로우에 필요한 권한 설정
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read         # 저장소 내용 읽기 권한
+  pages: write           # GitHub Pages에 쓰기 권한
+  id-token: write        # ID 토큰 쓰기 권한
 
+# 동시에 실행되는 작업에 대한 제어 (한 번에 한 작업만 실행)
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: false  # 진행 중인 작업은 취소하지 않음
 
 jobs:
   build-and-deploy:
@@ -20,29 +22,36 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Node.js 환경 설정(버전 18 사용 및 Yarn 캐시 활성화)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'yarn'
-          cache-dependency-path: '**/yarn.lock'
+          cache-dependency-path: '**/yarn.lock'  # Yarn 의존성 캐시 경로 지정
 
+      # Yarn으로 의존성 설치 (yarn.lock 파일에 고정된 버전 사용)
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile  # 의존성 설치
 
+      # Gatsby 캐시 정리 (빌드 전 캐시 제거)
       - name: Clean Gatsby cache
         run: yarn clean
 
+      # Gatsby 사이트 빌드 (최종 정적 파일 생성)
       - name: Build Gatsby site
         run: yarn build
 
+      # GitHub Pages에 필요한 설정 적용
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v5  # GitHub Pages 설정 적용
 
+      # 빌드 결과물인 public 디렉토리를 아티팩트로 업로드
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -50,4 +59,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4  # Pages 배포 실행
