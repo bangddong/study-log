@@ -43,6 +43,10 @@ jobs:
       - name: Clean Gatsby cache
         run: yarn clean
 
+      # notion to front matter 변환
+      - name: Convert Notion to Markdown
+        run: node front-matter.js
+
       # Gatsby 사이트 빌드 (최종 정적 파일 생성)
       - name: Build Gatsby site
         run: yarn build
