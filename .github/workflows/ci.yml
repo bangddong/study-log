@@ -45,7 +45,7 @@ jobs:
 
       # notion to front matter 변환
       - name: Convert Notion to Markdown
-        run: node front-matter.js
+        run: node convert-notion.js
 
       # Gatsby 사이트 빌드 (최종 정적 파일 생성)
       - name: Build Gatsby site
