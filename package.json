@@ -6,6 +6,8 @@
   "version": "0.0.1",
   "author": "dhbang",
   "dependencies": {
+    "@rundevelrun/free-visitor-counter": "^1.1.2",
+    "@tippyjs/react": "^4.2.6",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@giscus/react": "^3.0.0",
