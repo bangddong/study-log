@@ -163,3 +163,5 @@ public class MemberRepositoryTest {
 
       라이브러리 설치 (별도 설정 없음)
       `implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'`
+
+※ 강의 : https://www.inflearn.com/course/스프링부트-JPA-활용-1/dashboard
