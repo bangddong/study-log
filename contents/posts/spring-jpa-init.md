@@ -38,7 +38,7 @@ https://www.h2database.com
 
 설치 후 실행시 h2 DB 웹 콘솔창이 뜸. 아래와 같이 입력 후 접속
 
-![image.png](attachment:9b3dad48-8d05-4299-8bd0-abae626cab53:image.png)
+![spring-jpa-init-1.png](images/spring-jpa-init-1.png)
 
 정상 연결 확인 되었으면 파일 생성 확인 후 이후부터는 jdbc:h2:tcp://localhost/~/jpashop으로 접속
 
@@ -149,10 +149,9 @@ public class MemberRepositoryTest {
     }
     ```
 
+![spring-jpa-init-2.png](images/spring-jpa-init-2.png)
 
-![image.png](attachment:ebd0b773-e456-4d31-a699-515b11d645ac:image.png)
-
-![image.png](attachment:eb7c86d2-6f0b-4d70-a085-fdfcd925460f:image.png)
+![spring-jpa-init-3.png](images/spring-jpa-init-3.png)
 
 - JPA 로깅설정
     - 1번 방법
