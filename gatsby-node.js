@@ -89,12 +89,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode })
-    const newSlug = `/${slug.split("/").reverse()[1]}/`
+    // 새 구조: /contents/posts/카테고리/글제목/index.md → /카테고리/글제목/
+    // 기존 구조: /contents/posts/글제목.md → /글제목/
+    // createFilePath가 자동으로 올바른 경로 생성하므로 그대로 사용
 
     createNodeField({
       node,
       name: `slug`,
-      value: newSlug,
+      value: slug,
     })
   }
 }

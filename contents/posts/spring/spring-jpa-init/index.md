@@ -1,13 +1,14 @@
 ---
 emoji: "🚀"
 title: "Spring JPA 시작하기"
-date: 2025-07-18 13:55:00
-update: 2025-01-18 13:55:00
+date: 2024-08-20 13:55:00
+update: 2024-08-20 13:55:00
 tags:
   - Spring
   - JPA
-series: "Spring JPA"
+series: "스프링 부트와 JPA 활용 1"
 ---
+# 프로젝트 환경설정
 
 ## 프로젝트 생성
 
@@ -164,4 +165,6 @@ public class MemberRepositoryTest {
       라이브러리 설치 (별도 설정 없음)
       `implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'`
 
-※ 강의 : https://www.inflearn.com/course/스프링부트-JPA-활용-1/dashboard
+이 링크를 통해 구매하시면 제가 수익을 받을 수 있어요. 🤗
+
+    https://inf.run/4Sbno
