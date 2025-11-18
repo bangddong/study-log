@@ -1,8 +1,8 @@
 ---
 emoji: "🚀"
 title: "Spring JPA 시작하기"
-date: 2024-08-20 13:55:00
-update: 2024-08-20 13:55:00
+date: 2025-03-14 13:55:00
+update: 2025-03-14 13:55:00
 tags:
   - Spring
   - JPA
