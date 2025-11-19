@@ -164,6 +164,6 @@ public class MemberRepositoryTest {
       라이브러리 설치 (별도 설정 없음)
       `implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'`
 
-이 링크를 통해 구매하시면 제가 수익을 받을 수 있어요. 🤗
+**이 링크를 통해 구매하시면 제가 수익을 받을 수 있어요. 🤗**
 
-    https://inf.run/4Sbno
+https://inf.run/4Sbno

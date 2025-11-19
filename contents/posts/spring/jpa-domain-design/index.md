@@ -400,6 +400,6 @@ public class Address {
 - spring.jpa.hibernate.naming.physical-strategy
   org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
 
-이 링크를 통해 구매하시면 제가 수익을 받을 수 있어요. 🤗
+**이 링크를 통해 구매하시면 제가 수익을 받을 수 있어요. 🤗**
 
-    https://inf.run/4Sbno
+https://inf.run/4Sbno
