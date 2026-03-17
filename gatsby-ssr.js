@@ -4,4 +4,18 @@
  * See: https://www.gatsbyjs.com/docs/ssr-apis/
  */
 
-// You can delete this file if you're not using it
+const React = require("react")
+const { adsense } = require("./blog-config")
+
+exports.onRenderBody = ({ setHeadComponents }) => {
+  if (!adsense || !adsense.client) return
+
+  setHeadComponents([
+    <script
+      key="google-adsense"
+      async
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsense.client}`}
+      crossOrigin="anonymous"
+    />,
+  ])
+}

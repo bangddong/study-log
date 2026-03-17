@@ -1,7 +1,5 @@
 const blogConfig = require("./blog-config")
-const { title, description, author, siteUrl,adsense } = blogConfig
-
-const adsenseClient = adsense == undefined ? "" : adsense.client;
+const { title, description, author, siteUrl } = blogConfig
 
 module.exports = {
   siteMetadata: {
@@ -25,12 +23,6 @@ module.exports = {
         },
         cleanupOnClient: true,
         windowKey: "__PRELOADED_STATE__",
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-adsense`,
-      options: {
-        publisherId: `${adsenseClient}` ,
       },
     },
     {
