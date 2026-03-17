@@ -24,7 +24,7 @@ module.exports = {
     lang: "en",
   },
   adsense: {
-    client: "ca-pub-2327476184552798",
+    client: "ca-pub-9532486238287041",
     slot: "4877038723"
   }
 }
