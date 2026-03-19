@@ -1,15 +1,35 @@
 # 블로그 포스트 작성법
 
-이 스타터는 Gatsby의 파일 기반 라우팅을 활용하여, `content/blog/` 폴더에 Markdown 파일을 추가하면 자동으로 포스트가 생성됩니다.
+이 스타터는 Gatsby의 파일 기반 라우팅을 활용하여, `contents/posts/` 폴더에 Markdown 파일을 추가하면 자동으로 포스트가 생성됩니다.
 
 ## 📁 기본 구조
+
+주제와 서브카테고리 단위로 포스트를 정리하는 2뎁스 디렉터리 구조를 권장합니다.
 
 ```
 contents/
   posts/
-    hello-world/
-      index.md
+    <주제>/              ← 1뎁스  (예: spring)
+      <서브카테고리>/     ← 2뎁스  (예: jpa)
+        <글제목>/         ← 3뎁스  (예: jpa-what-is-jpa)
+          index.md
 ```
+
+**예시:**
+
+```
+contents/
+  posts/
+    spring/
+      jpa/
+        jpa-what-is-jpa/
+          index.md
+      transaction/
+        transaction-propagation-basic/
+          index.md
+```
+
+각 포스트의 URL은 파일 경로에서 자동으로 생성됩니다 (예: `/posts/spring/jpa/jpa-what-is-jpa/`).
 
 ## 📝 Frontmatter
 
