@@ -1,15 +1,35 @@
 # Writing Blog Posts
 
-This starter uses file-based routing. All posts live in the `content/blog/` directory. Each post is a folder with an `index.md` inside.
+This starter uses file-based routing. All posts live in the `contents/posts/` directory. Each post is a folder with an `index.md` inside.
 
 ## 📁 Basic Structure
+
+A 2-depth directory structure is recommended to organise posts by topic and sub-topic:
 
 ```
 contents/
   posts/
-    hello-world/
-      index.md
+    <topic>/              ← depth 1  (e.g. spring)
+      <sub-topic>/        ← depth 2  (e.g. jpa)
+        <article>/        ← depth 3  (e.g. jpa-what-is-jpa)
+          index.md
 ```
+
+**Example:**
+
+```
+contents/
+  posts/
+    spring/
+      jpa/
+        jpa-what-is-jpa/
+          index.md
+      transaction/
+        transaction-propagation-basic/
+          index.md
+```
+
+The URL for each post is derived automatically from its path (e.g. `/posts/spring/jpa/jpa-what-is-jpa/`).
 
 ## 📝 Frontmatter
 

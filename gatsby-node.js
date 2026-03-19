@@ -89,8 +89,8 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode })
-    // 새 구조: /contents/posts/카테고리/글제목/index.md → /카테고리/글제목/
-    // 기존 구조: /contents/posts/글제목.md → /글제목/
+    // 2뎁스 구조: /contents/posts/주제/서브카테고리/글제목/index.md → /posts/주제/서브카테고리/글제목/
+    // 예시: /contents/posts/spring/jpa/jpa-what-is-jpa/index.md → /posts/spring/jpa/jpa-what-is-jpa/
     // createFilePath가 자동으로 올바른 경로 생성하므로 그대로 사용
 
     createNodeField({
