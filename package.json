@@ -61,8 +61,8 @@
     "styled-reset": "^4.4.7"
   },
   "devDependencies": {
-    "@notionhq/client": "^5.20.0",
-    "dotenv": "^17.4.2",
+    "@notionhq/client": "2.2.15",
+    "dotenv": "16",
     "eslint-config-react-app": "^7.0.1",
     "gh-pages": "^5.0.0",
     "gray-matter": "^4.0.3",
