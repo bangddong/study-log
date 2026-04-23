@@ -34,7 +34,8 @@ async function run() {
     const mdString = n2m.toMarkdownString(mdblocks);
 
     const frontMatter = { title, date, tags, series, emoji };
-    const content = matter.stringify(mdString.parent || mdString, frontMatter);
+    const markdownBody = typeof mdString === 'string' ? mdString : (mdString.parent ?? '');
+    const content = matter.stringify(markdownBody, frontMatter);
     const filename = (slug || title.replace(/\s+/g, '-').toLowerCase()) + '.md';
 
     fs.writeFileSync(`${outputDir}/${filename}`, content);
