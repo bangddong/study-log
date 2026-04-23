@@ -9,7 +9,7 @@ dotenv.config();
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
-const outputDir = './content/posts';
+const outputDir = './contents/posts';
 
 async function run() {
   const response = await notion.databases.query({

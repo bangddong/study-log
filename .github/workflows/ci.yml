@@ -39,6 +39,13 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile  # 의존성 설치
 
+      # Notion DB에서 마크다운 파일 생성
+      - name: Convert Notion to Markdown
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          DATABASE_ID: ${{ secrets.DATABASE_ID }}
+        run: node convert-notion.js
+
       # Gatsby 캐시 정리 (빌드 전 캐시 제거)
       - name: Clean Gatsby cache
         run: yarn clean
