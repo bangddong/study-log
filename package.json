@@ -6,12 +6,12 @@
   "version": "0.0.1",
   "author": "dhbang",
   "dependencies": {
-    "@rundevelrun/free-visitor-counter": "^1.1.2",
-    "@tippyjs/react": "^4.2.6",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@giscus/react": "^3.0.0",
     "@mui/material": "^6.4.0",
+    "@rundevelrun/free-visitor-counter": "^1.1.2",
+    "@tippyjs/react": "^4.2.6",
     "babel-eslint": "^10.1.0",
     "babel-plugin-styled-components": "^2.1.4",
     "gatsby": "^5.11.0",
@@ -33,6 +33,7 @@
     "gatsby-remark-footnotes": "^0.0.8",
     "gatsby-remark-images": "^7.11.0",
     "gatsby-remark-katex": "^3.5.0",
+    "gatsby-remark-mermaid": "^5.0.0",
     "gatsby-remark-prismjs": "^7.11.0",
     "gatsby-remark-reading-time": "^1.1.0",
     "gatsby-remark-static-images": "^1.2.1",
@@ -42,6 +43,7 @@
     "katex": "^0.12.0",
     "lodash": "^4.17.21",
     "minipass": "6.0.2",
+    "playwright": "^1.50.1",
     "prismjs": "^1.29.0",
     "prop-types": "^15.8.1",
     "query-string": "^8.1.0",
@@ -56,13 +58,15 @@
     "redux": "^4.2.1",
     "sharp": "^0.32.1",
     "styled-components": "^5.2.1",
-    "styled-reset": "^4.4.7",
-    "gatsby-remark-mermaid": "^5.0.0",
-    "playwright": "^1.50.1"
+    "styled-reset": "^4.4.7"
   },
   "devDependencies": {
+    "@notionhq/client": "^5.20.0",
+    "dotenv": "^17.4.2",
     "eslint-config-react-app": "^7.0.1",
     "gh-pages": "^5.0.0",
+    "gray-matter": "^4.0.3",
+    "notion-to-md": "^3.1.9",
     "prettier": "2.8.8"
   },
   "keywords": [
