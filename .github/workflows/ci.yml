@@ -44,7 +44,7 @@ jobs:
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
-        run: node convert-notion.js
+        run: node convert-notion.mjs
 
       # Gatsby 캐시 정리 (빌드 전 캐시 제거)
       - name: Clean Gatsby cache
