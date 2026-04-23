@@ -38,7 +38,9 @@ async function run() {
     const content = matter.stringify(markdownBody, frontMatter);
     const filename = (slug || title.replace(/\s+/g, '-').toLowerCase()) + '.md';
 
-    fs.writeFileSync(`${outputDir}/${filename}`, content);
+    const filepath = `${outputDir}/${filename}`;
+    fs.mkdirSync(filepath.substring(0, filepath.lastIndexOf('/')), { recursive: true });
+    fs.writeFileSync(filepath, content);
     console.log(`✔ ${filename} written`);
   }
 }
