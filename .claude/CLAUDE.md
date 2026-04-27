@@ -52,17 +52,60 @@ Slug: spring/jpa/jpa-basic
 
 **Slug에 카테고리 경로를 반드시 포함해야 한다.** 빈 Slug는 타이틀을 소문자+하이픈으로 변환해 flat 경로가 된다.
 
-## 새 글 게시 방법
+## 새 글 게시 방법 (AI 작업 시 필독)
 
-1. Notion Study Log DB에 페이지 생성
-2. 위 스키마에 맞게 properties 설정 (Slug 필수)
-3. 본문 작성
-4. study-log 레포에 아무 변경사항이나 push → CI 자동 실행
+### 1단계 — Notion 페이지 생성
 
-변경사항 없이 배포만 트리거하려면:
-```bash
-git commit --allow-empty -m "chore: trigger deploy" && git push origin main
+`notion-create-pages` 호출 시 아래 properties를 한 번에 모두 지정한다.
+
+```json
+{
+  "Title": "글 제목",
+  "Emoji": "🗄️",
+  "Slug": "study/example-slug",
+  "Series": "AI",
+  "Status": "완료",
+  "date:Date:start": "2026-04-27",
+  "date:Date:is_datetime": 0,
+  "date:Last Updated:start": "2026-04-27",
+  "date:Last Updated:is_datetime": 0
+}
 ```
+
+**Tags는 페이지 생성 시 포함할 수 없다.** multi_select는 create API에서 실패한다.
+Tags는 반드시 생성 직후 `notion-update-page`로 별도 설정한다.
+
+```json
+{ "Tags": "[\"AI\",\"Claude Code\"]" }
+```
+
+Tags 허용값: `Spring`, `JPA`, `Querydsl`, `Transaction`, `AI`, `Claude Code`
+
+---
+
+### 2단계 — 사용자 검토 (push 전 필수)
+
+Notion 페이지 작성 완료 후 **반드시 멈추고** 사용자에게 아래 정보를 보여준다.
+
+- Notion 페이지 URL
+- 글 제목 / Slug / Tags / Series
+- 배포 예정 URL (`https://dhbang.co.kr/posts/{slug}/`)
+
+**사용자가 명시적으로 승인하기 전까지 push하지 않는다.**
+
+---
+
+### 3단계 — CI 트리거
+
+사용자 승인 후 main에 push한다. 변경사항이 없으면 빈 커밋을 사용한다.
+
+```bash
+git pull origin main
+git commit --allow-empty -m "chore: trigger deploy"
+git push origin main
+```
+
+`git pull` 없이 push하면 rejected된다. pull을 먼저 실행할 것.
 
 ## CI/CD
 
