@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react"
 import styled, { useTheme } from "styled-components"
-import Tippy from "@tippyjs/react"
-import "tippy.js/dist/tippy.css"
-import { FreeVisitorCounter } from "@rundevelrun/free-visitor-counter"
-
 import { Link } from "gatsby"
 
 import { headerTitle, headerSubTitle, themeColor } from "../../../../blog-config"
@@ -12,9 +8,8 @@ import {
   FaSun,
   FaMoon,
   FaTags,
-  FaListUl
-  , FaSearch,
-  FaChartPie,
+  FaListUl,
+  FaSearch,
 } from "react-icons/fa"
 
 const HeaderWrapper = styled.header`
@@ -115,20 +110,6 @@ const Header = ({ toggleTheme }) => {
   const theme = useTheme()
   const [scrollY, setScrollY] = useState()
   const [hidden, setHidden] = useState(false)
-  const [dashboardUrl, setDashboardUrl] = useState();
-  const [totalCount, setTotalCount] = useState();
-  const [todayCount, setTodayCount] = useState();
-  const [hasLoaded, setHasLoaded] = useState(false);
-
-  useEffect(() => {
-    if (!hasLoaded) {
-      setHasLoaded(true);
-    }
-  }, []); // 처음 마운트 될 때 한 번만 실행
-
-  const checkValue = (value) => {
-    return value === null || value === "" || value === undefined
-  }
 
   const detectScrollDirection = () => {
     if (scrollY >= window.scrollY) {
@@ -193,21 +174,6 @@ const Header = ({ toggleTheme }) => {
           <Link to="/search">
             <FaSearch />
           </Link>
-          <Tippy content={<> Total : {totalCount}<br/>Today : {todayCount} </>} placement="left">
-            <a href={dashboardUrl} target="_blank" rel="noopener noreferrer">
-              <FaChartPie />
-              {!hasLoaded && (
-                <FreeVisitorCounter
-                  style={{ display: "none" }}
-                  onLoad={function (response) {
-                    setDashboardUrl(response.dashboardUrl);
-                    setTodayCount(response.todayCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                    setTotalCount(response.totalCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                  }}
-                />
-              )}
-            </a>
-          </Tippy>
         </Menu>
       </Inner>
     </HeaderWrapper>
