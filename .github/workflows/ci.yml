@@ -7,7 +7,7 @@ on:
 
 # 워크플로우에 필요한 권한 설정
 permissions:
-  contents: read         # 저장소 내용 읽기 권한
+  contents: write        # 저장소 내용 읽기/쓰기 권한 (생성된 마크다운 커밋용)
   pages: write           # GitHub Pages에 쓰기 권한
   id-token: write        # ID 토큰 쓰기 권한
 
@@ -45,6 +45,15 @@ jobs:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
         run: node convert-notion.mjs
+
+      # 생성된 마크다운 파일을 git에 커밋 (다음 빌드에서 Notion 재조회 불필요)
+      - name: Commit generated markdown
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add contents/posts/
+          git diff --staged --quiet || git commit -m "chore: sync posts from Notion [skip ci]"
+          git push
 
       # Gatsby 캐시 정리 (빌드 전 캐시 제거)
       - name: Clean Gatsby cache
