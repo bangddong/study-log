@@ -18,6 +18,10 @@ function extractText(richText) {
 async function run() {
   const response = await notion.databases.query({
     database_id: process.env.DATABASE_ID,
+    filter: {
+      property: '배포상태',
+      select: { equals: '작성완료' },
+    },
   });
 
   for (const page of response.results) {
@@ -26,7 +30,7 @@ async function run() {
     const title = extractText(props.Title?.title) || '제목 없음';
     const date = props.Date?.date?.start || page.created_time;
     const tags = props.Tags?.multi_select?.map(t => t.name) || [];
-    const series = props.Series?.select?.name || '';
+    const series = props.Series?.select?.name || null;
     const emoji = extractText(props.Emoji?.rich_text) || page.icon?.emoji || '';
     const slug = extractText(props.Slug?.rich_text);
 
@@ -42,6 +46,15 @@ async function run() {
     fs.mkdirSync(filepath.substring(0, filepath.lastIndexOf('/')), { recursive: true });
     fs.writeFileSync(filepath, content);
     console.log(`✔ ${filename} written`);
+
+    await notion.pages.update({
+      page_id: page.id,
+      properties: {
+        Deployed: { checkbox: true },
+        '배포상태': { select: { name: '배포완료' } },
+      },
+    });
+    console.log(`✔ ${filename} → 배포완료`);
   }
 }
 
