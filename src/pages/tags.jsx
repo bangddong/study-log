@@ -77,7 +77,9 @@ const TagsPage = ({ data }) => {
           onClick={tag => {
             if (tag === selected) {
               navigate("/tags")
-            } else setSelected(tag)
+            } else {
+              navigate(`/tags?q=${tag}`)
+            }
           }}
         />
       </TagListWrapper>
