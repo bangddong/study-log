@@ -137,7 +137,7 @@ const Header = ({ toggleTheme }) => {
   const [showFirstDiv, setShowFirstDiv] = useState(true)
 
   useEffect(() => {
-    if (!checkValue(headerSubTitle)) {
+    if (headerSubTitle) {
       const interval = setInterval(() => {
         setShowFirstDiv(prev => !prev)
       }, 5000)
