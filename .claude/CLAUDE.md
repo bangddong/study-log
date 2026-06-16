@@ -33,9 +33,9 @@ https://dhbang.co.kr
 | Last Updated | date | 마지막 수정일 |
 | Slug | text | **파일 경로** — 카테고리 포함 필수 (예: `study/ai-agent-harness`) |
 | Tags | multi_select | AI, Claude Code, Spring, JPA, Querydsl, Transaction |
-| Series | select | 강의 시리즈명 (없으면 빈값) |
-| Status | status | 시작 전 / 진행 중 / 완료 |
-| Deployed | checkbox | 배포 완료 시 자동 체크 (스케줄러) |
+| Series | select | 연재 시리즈명. **연속된 글에만 설정**한다. 단독 글이면 반드시 비워둔다 — 비워두면 시리즈 위젯이 렌더링되지 않고 Tags로만 구분된다. |
+| 배포상태 | select | 작성중 / 작성완료 / 배포완료 |
+| Deployed | checkbox | CI가 작성완료 처리 후 자동 체크 (배포상태도 배포완료로 변경) |
 
 ### Slug 규칙
 Slug가 `contents/posts/` 하위 경로를 결정한다.
@@ -48,7 +48,16 @@ Slug: study/ai-agent-harness
 Slug: spring/jpa/jpa-basic
 → contents/posts/spring/jpa/jpa-basic.md
 → URL: /posts/spring/jpa/jpa-basic/
+
+Slug: trouble/post-name
+→ contents/posts/trouble/post-name.md
+→ URL: /posts/trouble/post-name/
 ```
+
+**섹션 분류 가이드**:
+- `spring/jpa/`, `spring/transaction/` — Spring 강의 정리
+- `study/` — AI, Harness Engineering 등 자율 학습
+- `trouble/` — 삽질 경험, 디버깅 기록, 실수 모음
 
 **Slug에 카테고리 경로를 반드시 포함해야 한다.** 빈 Slug는 타이틀을 소문자+하이픈으로 변환해 flat 경로가 된다.
 
@@ -63,14 +72,15 @@ Slug: spring/jpa/jpa-basic
   "Title": "글 제목",
   "Emoji": "🗄️",
   "Slug": "study/example-slug",
-  "Series": "AI",
-  "Status": "완료",
+  "배포상태": "작성완료",
   "date:Date:start": "2026-04-27",
   "date:Date:is_datetime": 0,
   "date:Last Updated:start": "2026-04-27",
   "date:Last Updated:is_datetime": 0
 }
 ```
+
+**Series는 연속된 글에만 설정한다.** 단독 글(삽질기, 개념 정리 등)은 Series를 비워두면 시리즈 위젯 없이 Tags로만 구분된다. Slug가 같은 `spring/` 하위여도 연재가 아니면 Series를 설정하지 않는다.
 
 **Tags는 페이지 생성 시 포함할 수 없다.** multi_select는 create API에서 실패한다.
 Tags는 반드시 생성 직후 `notion-update-page`로 별도 설정한다.
@@ -79,7 +89,7 @@ Tags는 반드시 생성 직후 `notion-update-page`로 별도 설정한다.
 { "Tags": "[\"AI\",\"Claude Code\"]" }
 ```
 
-Tags 허용값: `Spring`, `JPA`, `Querydsl`, `Transaction`, `AI`, `Claude Code`
+Tags 허용값: `Spring`, `JPA`, `Querydsl`, `Transaction`, `AI`, `Claude Code`, `Troubleshooting`
 
 ---
 
@@ -113,9 +123,12 @@ git push origin main
 
 **파이프라인**:
 1. `yarn install --frozen-lockfile`
-2. `node convert-notion.mjs` — Notion DB → 마크다운 (GitHub secrets 사용)
-3. `yarn clean && yarn build`
-4. GitHub Pages 배포
+2. `node convert-notion.mjs` — `작성완료` 페이지만 조회 → 마크다운 생성 → Notion 상태를 `배포완료`로 업데이트
+3. 생성된 `contents/posts/` 를 git commit & push (`[skip ci]` 태그로 재귀 트리거 방지)
+4. `yarn clean && yarn build`
+5. GitHub Pages 배포
+
+**설계 원칙**: 마크다운 파일을 git에 커밋해 보존한다. 이미 배포된 글은 git에 남아 있으므로 매 빌드마다 Notion을 재조회하지 않아도 된다. 신규 글(`작성완료`)만 Notion에서 가져온다.
 
 **GitHub Secrets** (github-pages environment):
 - `NOTION_TOKEN`: Notion integration 토큰
@@ -125,7 +138,7 @@ git push origin main
 
 ## convert-notion.mjs
 
-Notion DB 전체를 조회해 각 페이지를 마크다운으로 변환 후 저장.
+`배포상태 = 작성완료`인 페이지만 조회해 마크다운으로 변환 후 저장. 처리 완료 후 Notion 상태를 `배포완료`로 업데이트한다. 이미 `배포완료`인 글은 git에 파일이 존재하므로 재조회하지 않는다.
 
 - 입력: `process.env.NOTION_TOKEN`, `process.env.DATABASE_ID`
 - 출력: `contents/posts/{slug}.md` (하위 디렉토리 자동 생성)
