@@ -19,8 +19,10 @@ async function run() {
   const response = await notion.databases.query({
     database_id: process.env.DATABASE_ID,
     filter: {
-      property: '배포상태',
-      select: { equals: '작성완료' },
+      or: [
+        { property: '배포상태', select: { equals: '작성완료' } },
+        { property: '배포상태', select: { equals: '배포완료' } },
+      ],
     },
   });
 
@@ -47,14 +49,17 @@ async function run() {
     fs.writeFileSync(filepath, content);
     console.log(`✔ ${filename} written`);
 
-    await notion.pages.update({
-      page_id: page.id,
-      properties: {
-        Deployed: { checkbox: true },
-        '배포상태': { select: { name: '배포완료' } },
-      },
-    });
-    console.log(`✔ ${filename} → 배포완료`);
+    const deployStatus = props['배포상태']?.select?.name;
+    if (deployStatus === '작성완료') {
+      await notion.pages.update({
+        page_id: page.id,
+        properties: {
+          Deployed: { checkbox: true },
+          '배포상태': { select: { name: '배포완료' } },
+        },
+      });
+      console.log(`✔ ${filename} → 배포완료`);
+    }
   }
 }
 
