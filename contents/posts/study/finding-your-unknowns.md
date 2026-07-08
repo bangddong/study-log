@@ -198,6 +198,24 @@ implementation-notes.md의 "Deviations" 섹션에 어떤 선택을 왜 했는지
 ---
 
 
+## 🔌 플러그인으로 만들어둔습니다
+
+
+이 글의 8가지 기법을 그대로 Claude Code 스킬로 패키징한 플러그인을 만들어두었습니다. 두 줄이면 설치됩니다.
+
+
+```plain text
+/plugin marketplace add bangddong/finding-unknowns
+/plugin install finding-unknowns@finding-unknowns
+```
+
+
+`/finding-unknowns:blindspot`, `/finding-unknowns:interview` 처럼 직접 호출해도 되고, 상황이 맞으면 Claude가 알아서 발동하기도 합니다. 자세한 사용법은 [bangddong/finding-unknowns](https://github.com/bangddong/finding-unknowns)를 참고하세요.
+
+
+---
+
+
 ## 참고
 
 - [A Field Guide to Claude Fable 5: Finding Your Unknowns](https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns) — Thariq Shihipar, Claude Blog (원문)
