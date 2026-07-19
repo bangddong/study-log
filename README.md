@@ -1,66 +1,48 @@
-# gatsby-starter-rundevelrun
+# study-log
 
-A minimal, SEO-friendly Gatsby blog starter — perfect for developers who want a clean, fast, and customizable blog setup.
+학습한 것을 기록하는 기술 블로그입니다. Notion에서 글을 쓰면 CI가 마크다운으로 변환해 GitHub Pages로 자동 배포합니다.
 
-![데모 스크린샷](screen.png)
+👉 **https://dhbang.co.kr**
 
-> 🇰🇷 [한국어 README 보기](README.ko.md)
+## 아키텍처
 
-## 🚀 Features
-
-- 📝 Markdown-based content
-- ⚡ Blazing-fast performance (Gatsby + GraphQL)
-- 🧠 SEO optimized with meta tags and schema.org
-- 💻 Fully responsive, mobile-friendly
-- 🌙 Dark mode toggle
-
-## 👀 Demo
-
-👉 [Live Demo](https://6developer.com)
-
-This blog starter powers [6developer.com](https://6developer.com), a developer-focused tech blog.
-
-## 🛠️ Quick Start
-
-```bash
-gatsby new my-blog https://github.com/rundevelrun/gatsby-starter-rundevelrun
-cd my-blog
-gatsby develop
+```
+Notion Study Log DB
+        ↓  node convert-notion.mjs  (작성완료 글만 조회 → 마크다운 생성)
+contents/posts/{slug}.md
+        ↓  gatsby build
+public/
+        ↓  gh-pages
+https://dhbang.co.kr
 ```
 
-## 🧩 Who is this for?
+- **소스**: Notion 데이터베이스 — 글 작성·메타데이터(제목, Slug, Tags, Series) 관리
+- **변환**: [`convert-notion.mjs`](convert-notion.mjs) — `배포상태 = 작성완료`인 페이지만 가져와 마크다운으로 저장하고, 처리 후 Notion 상태를 `배포완료`로 갱신
+- **보존**: 생성된 마크다운은 git에 커밋 — 이미 배포된 글은 Notion을 재조회하지 않음
+- **배포**: [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — main push 시 변환 → 빌드 → GitHub Pages 배포
 
-This starter is ideal for:
+## 콘텐츠 구성
 
-- Developers who want to focus on writing, not setup.
-- People looking for a minimal yet powerful blog.
-- Those who care about SEO and performance.
+| 경로 | 내용 |
+|------|------|
+| `spring/` | Spring · JPA · Querydsl · Transaction 강의 정리 |
+| `study/` | AI, Agentic Design Patterns, Harness Engineering 등 자율 학습 |
+| `trouble/` | 삽질 경험, 디버깅 기록 |
 
-## 🖼️ Showcase
+## 로컬 개발
 
-Have you built something with this starter? Add your blog here via Pull Request!
+```bash
+yarn install
+yarn develop      # 개발 서버 (localhost:8000)
+yarn build        # 프로덕션 빌드
+```
 
-- [6developer.com](https://6developer.com)
-- [pang-ho.github.io](http://pang-ho.github.io/)
+Notion 변환을 로컬에서 실행하려면 `.env`에 `NOTION_TOKEN`, `DATABASE_ID`를 설정한 뒤:
 
-## 📚 Documentation
+```bash
+node convert-notion.mjs
+```
 
-- [How to write posts](docs/writing.md) 
-- [How to customize the theme](docs/customization.md)
-- [Deployment guide](docs/deploy.md) 
+---
 
-## 🙌 Contributing
-
-Contributions welcome! Feel free to submit PRs or open issues.
-
-## ⭐ Star History
-
-<a href="https://www.star-history.com/#rundevelrun/gatsby-starter-rundevelrun&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=rundevelrun/gatsby-starter-rundevelrun&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=rundevelrun/gatsby-starter-rundevelrun&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=rundevelrun/gatsby-starter-rundevelrun&type=Date" />
- </picture>
-</a>
-
-If you find this useful, please consider starring the project ⭐️
+테마는 [gatsby-starter-rundevelrun](https://github.com/rundevelrun/gatsby-starter-rundevelrun)을 기반으로 합니다.
