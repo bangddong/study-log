@@ -61,6 +61,21 @@ Slug: trouble/post-name
 
 **Slug에 카테고리 경로를 반드시 포함해야 한다.** 빈 Slug는 타이틀을 소문자+하이픈으로 변환해 flat 경로가 된다.
 
+## 글쓰기 (AI 작업 시 필독)
+
+글을 쓰거나 다듬을 때는 **`.claude/writing-style.md`를 반드시 먼저 읽는다.** 스킬을 거치지 않는 요청("글 하나 써줘", "이 문단 다듬어줘")에도 동일하게 적용된다.
+
+핵심 규칙만 옮기면:
+
+- 소제목은 라벨이 아니라 **주장문**. 목차만 읽어도 논지가 이어져야 한다.
+- 개념 정의는 **"A가 아니라 B다"** 형태로 독자의 오해를 먼저 부순다.
+- **한계 섹션은 필수.** 어디서 비싸지는지, 언제 쓰지 말아야 하는지.
+- **본문에 줄표(—)를 쓰지 않는다.** 예외는 코드 주석, 이미지 캡션 라벨, 참고문헌 원제목뿐.
+
+발행까지 하려면 `write-study-post` 스킬을 사용한다.
+
+---
+
 ## 새 글 게시 방법 (AI 작업 시 필독)
 
 ### 1단계 — Notion 페이지 생성
@@ -158,6 +173,20 @@ DB 스키마에 없는 태그는 페이지 생성 시 에러 발생. Notion MCP�
 notion-update-data-source (data_source_id: cfc0dc32-0c20-4846-aefe-3ced8939b68d)
 statements: ALTER COLUMN "Tags" SET MULTI_SELECT('기존태그1':blue, ..., '신규태그':color)
 ```
+
+## 새 환경 셋업
+
+레포를 clone하면 `CLAUDE.md`·`writing-style.md`·스킬은 따라오지만, 아래는 따로 준비해야 한다.
+
+| 항목 | 없으면 | 준비 방법 |
+|------|--------|-----------|
+| Notion MCP 커넥터 | **발행 워크플로 전체 불가** (페이지 생성·조회 실패) | Claude에서 Notion 커넥터 연결 후 Study Log DB 접근 승인 |
+| `.env` | 로컬 `convert-notion.mjs` 실행 불가 | 아래 "로컬 개발" 참고 |
+| `gh` 인증 | CI 상태 확인 불가 | `gh auth login` |
+
+CI 배포는 어디서 push하든 동작한다. `NOTION_TOKEN`·`DATABASE_ID`가 GitHub Secrets(github-pages environment)에 있기 때문이다.
+
+---
 
 ## 로컬 개발
 

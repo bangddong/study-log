@@ -72,3 +72,6 @@ yarn-error.log
 
 package-lock.json
 /CLAUDE.md
+
+# Claude Code 로컬 설정
+.claude/settings.local.json
