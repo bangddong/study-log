@@ -73,6 +73,7 @@ Slug: trouble/post-name
 - **본문에 줄표(—)를 쓰지 않는다.** 예외는 코드 주석, 이미지 캡션 라벨, 참고문헌 원제목뿐.
 
 발행까지 하려면 `write-study-post` 스킬을 사용한다.
+다른 도구·에이전트에 이 문체를 이식하려면 `.claude/writing-style-prompt.md`의 코드블록을 복사해 쓴다.
 
 ---
 
