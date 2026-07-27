@@ -1,5 +1,5 @@
 ---
-title: '첫 출력은 초안입니다: Reflection, 에이전트가 자기 답을 다시 쓰게 만드는 법'
+title: '첫 출력은 초안입니다 (Reflection)'
 date: '2026-07-27'
 tags:
   - AI
