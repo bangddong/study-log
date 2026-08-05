@@ -94,6 +94,7 @@ export const pageQuery = graphql`
       filter: { frontmatter: { series: { eq: $series } } }
     ) {
       nodes {
+        id
         excerpt(pruneLength: 200, truncate: true)
         fields {
           slug

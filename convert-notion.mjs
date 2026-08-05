@@ -39,9 +39,18 @@ async function run() {
 
     const frontMatter = { title, date, tags, series, emoji };
     const markdownBody = typeof mdString === 'string' ? mdString : (mdString.parent ?? '');
-    const content = matter.stringify(markdownBody, frontMatter);
     const filename = (slug || title.replace(/\s+/g, '-').toLowerCase()) + '.md';
 
+    // 본문이 빈 페이지는 쓰지 않는다.
+    // 프론트매터만 있는 파일을 쓰면 기존 {slug}/index.md 와 슬러그가 겹쳐
+    // MarkdownRemark 노드가 2개 생기고, 목록 렌더링의 React key가 충돌한다.
+    // 배포완료로 마킹도 하지 않아 다음 실행에서 다시 잡히게 둔다.
+    if (markdownBody.trim() === '') {
+      console.warn(`⚠ ${filename} skipped - Notion 본문이 비어 있음 (page ${page.id})`);
+      continue;
+    }
+
+    const content = matter.stringify(markdownBody, frontMatter);
     const filepath = `${outputDir}/${filename}`;
     fs.mkdirSync(filepath.substring(0, filepath.lastIndexOf('/')), { recursive: true });
     fs.writeFileSync(filepath, content);

@@ -68,6 +68,7 @@ export const pageQuery = graphql`
       filter: { fileAbsolutePath: { regex: "/contents/posts/" } }
     ) {
       nodes {
+        id
         excerpt(pruneLength: 200, truncate: true)
         fields {
           slug

@@ -86,7 +86,7 @@ const PostList = ({ postList }) => {
         const { excerpt } = post
         const { slug } = post.fields
         return (
-          <React.Fragment key={JSON.stringify({ slug, date })}>
+          <React.Fragment key={post.id ?? `${slug}-${i}`}>
             <PostWrapper>
               <Title size="bg">
                 {emoji ? (
