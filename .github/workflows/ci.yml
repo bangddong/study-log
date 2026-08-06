@@ -46,6 +46,11 @@ jobs:
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
         run: node convert-notion.mjs
 
+      # 같은 URL로 해석되는 마크다운이 둘 이상이면 여기서 빌드를 세운다.
+      # 커밋 전에 잡아야 잘못된 상태가 레포에 남지 않는다.
+      - name: Check duplicate slugs
+        run: node scripts/check-duplicate-slugs.mjs
+
       # 생성된 마크다운 파일을 git에 커밋 (다음 빌드에서 Notion 재조회 불필요)
       - name: Commit generated markdown
         run: |
