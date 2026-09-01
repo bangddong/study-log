@@ -88,7 +88,7 @@ export const pageQuery = graphql`
       }
     }
     seriesList: allMarkdownRemark(
-      sort: { order: ASC, fields: [frontmatter___date] }
+      sort: { frontmatter: { date: ASC } }
       filter: { frontmatter: { series: { eq: $series } } }
     ) {
       edges {
