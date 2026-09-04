@@ -75,3 +75,6 @@ package-lock.json
 
 # Claude Code 로컬 설정
 .claude/settings.local.json
+
+# 원고 초안 (Notion이 원본, 세션 간 보존용 로컬 사본)
+.claude/drafts/
