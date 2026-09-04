@@ -25,13 +25,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      # Node.js 환경 설정(버전 18 사용 및 Yarn 캐시 활성화)
+      # Node.js 환경 설정(버전 22 사용 및 Yarn 캐시 활성화)
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '18'
+          node-version: '22'
           cache: 'yarn'
           cache-dependency-path: '**/yarn.lock'  # Yarn 의존성 캐시 경로 지정
 
@@ -71,14 +71,14 @@ jobs:
 
       # GitHub Pages에 필요한 설정 적용
       - name: Configure Pages
-        uses: actions/configure-pages@v5  # GitHub Pages 설정 적용
+        uses: actions/configure-pages@v6  # GitHub Pages 설정 적용
 
       # 빌드 결과물인 public 디렉토리를 아티팩트로 업로드
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4  # Pages 배포 실행
+        uses: actions/deploy-pages@v5  # Pages 배포 실행
