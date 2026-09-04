@@ -1,8 +1,8 @@
 ---
 emoji: "🚀"
-title: "API 개발 기본"
-date: 2025-03-19 00:00:00
-update: 2025-03-19 00:00:00
+title: "API 개발 고급 - 준비"
+date: 2025-03-20 00:00:00
+update: 2025-03-20 00:00:00
 tags:
   - Spring
   - JPA
