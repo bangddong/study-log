@@ -64,7 +64,7 @@ export default Search
 export const pageQuery = graphql`
   query {
     allMarkdownRemark(
-      sort: { frontmatter: { date: DESC } }
+      sort: [{ frontmatter: { date: DESC } }, { fields: { slug: DESC } }]
       filter: { fileAbsolutePath: { regex: "/contents/posts/" } }
     ) {
       nodes {

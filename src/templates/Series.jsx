@@ -90,7 +90,7 @@ export default Series
 export const pageQuery = graphql`
   query BlogSeriesBySeriesName($series: String) {
     posts: allMarkdownRemark(
-      sort: { frontmatter: { date: ASC } }
+      sort: [{ frontmatter: { date: ASC } }, { fields: { slug: ASC } }]
       filter: { frontmatter: { series: { eq: $series } } }
     ) {
       nodes {

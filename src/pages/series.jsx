@@ -66,7 +66,7 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(
-      sort: { frontmatter: { date: DESC } }
+      sort: [{ frontmatter: { date: DESC } }, { fields: { slug: DESC } }]
       filter: { fileAbsolutePath: { regex: "/contents/posts/" } }
     ) {
       group(field: { frontmatter: { tags: SELECT } }) {
