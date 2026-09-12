@@ -26,7 +26,7 @@ series: "JPA 기본"
 - EntityManager.find()
 - 객체 그래프 탐색(a.getB().getC())
 
-JPA를 사용하면 엔티티 객체를 중심으로 개발하게 되는데 검색을 할 때에도 **테이블이 아닌 `엔티티 객체를 대상으로 검색`**해야 합니다. 모든 DB 데이터를 객체로 변환해서 검색하는 것은 불가능하니 어플리케이션이 필요한 데이터만 불러오려면 결국은 **검색 조건이 포함된 SQL을 사용**해야 합니다.
+JPA를 사용하면 엔티티 객체를 중심으로 개발하게 되는데 검색을 할 때에도 **테이블이 아닌** `엔티티 객체를 대상으로 검색`해야 합니다. 모든 DB 데이터를 객체로 변환해서 검색하는 것은 불가능하니 어플리케이션이 필요한 데이터만 불러오려면 결국은 **검색 조건이 포함된 SQL을 사용**해야 합니다.
 
 JPA는 검색 조건 SQL을 지원하기 위해 SQL을 추상화한 JPQL이라는 객체 지향 쿼리 언어를 제공합니다. 기본적으로 SQL과 문법이 유사하며 SELECT, FROM, WHERE, GROUp BY, HAVING, JOIN과 같은 표준 문법을 모두 지원합니다. 즉 JPQL은 엔티티 객체를 대상으로 쿼리하는 것이고 SQL은 DB 테이블을 대상으로 쿼리합니다.
 
@@ -54,9 +54,9 @@ Hibernate:
             m1_0.USERNAME like '%hello%' escape ''
 ```
 
-JPQL은 객체 지향 쿼리이기 때문에 위 코드에서 select하는 Member는 **테이블이 아닌 객체**이며 SQL을 추상화 했기 때문에 **`특정 DB에 의존하지 않는다`**는 특징을 갖고 있습니다.
+JPQL은 객체 지향 쿼리이기 때문에 위 코드에서 select하는 Member는 **테이블이 아닌 객체**이며 SQL을 추상화 했기 때문에 `특정 DB에 의존하지 않는다`는 특징을 갖고 있습니다.
 
-하지만 위와 같이 쓰면 jpql 역시 단순 String 문자열이기 떄문에 **`동적 쿼리`**를 만들기가 굉장히 어렵고 번거로워 집니다.
+하지만 위와 같이 쓰면 jpql 역시 단순 String 문자열이기 떄문에 `동적 쿼리`를 만들기가 굉장히 어렵고 번거로워 집니다.
 
 ```java
 String jpql = "select m From Member m ";
@@ -184,7 +184,7 @@ Query query1 = em.createQuery("select m.username, m.age from Member m");
 
 ### 결과 조회 API
 
-- query.getResultList() : 결과가 **`하나 이상`**일 때 리스트 반환
+- query.getResultList() : 결과가 `하나 이상`일 때 리스트 반환
     - 결과 없음 : 빈 리스트 반환
 - query.getSingleResult(): 결과가 **`정확히 하나`**, 단일 객체 반환
     - 결과 없음 : NoResultExcpetion
@@ -209,7 +209,7 @@ Member result = em.createQuery("select m from Member m where m.username = ?1", M
 
 ## 프로젝션
 
-JPA에서는 SELECT 절에 조회할 대상은 **`모두 영속성 컨텍스트에 의해 관리`**되기 떄문에 필요한 부분만 지정하는 것으로 엔티티, 임베디드 타입, 스칼라 타입이 됩니다.
+JPA에서는 SELECT 절에 조회할 대상은 `모두 영속성 컨텍스트에 의해 관리`되기 떄문에 필요한 부분만 지정하는 것으로 엔티티, 임베디드 타입, 스칼라 타입이 됩니다.
 
 - SELECT **`m`** FROM Member m -> 엔티티 프로젝션
 - SELECT **`m.team`** FROM Member m -> 엔티티 프로젝션

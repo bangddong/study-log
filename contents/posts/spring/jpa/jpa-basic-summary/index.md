@@ -20,7 +20,7 @@ series: "JPA 기본"
 ## **2. 영속성 컨텍스트 (Persistence Context)**
 
 - **JPA에서 가장 중요한 개념!**
-- **`EntityManager`**가 관리하는 **1차 캐시** 역할.
+- `EntityManager`가 관리하는 **1차 캐시** 역할.
 - 같은 트랜잭션 내에서 동일한 엔티티는 동일한 객체로 관리됨.
 - 주요 동작:
     - **`persist()`**: 영속 상태로 변경
@@ -32,8 +32,8 @@ series: "JPA 기본"
 
 ## **3. 엔티티 생명주기**
 
-1. **비영속 (Transient)** → **`new`**로 생성했지만 아직 JPA가 관리하지 않는 상태.
-2. **영속 (Managed)** → **`persist()`**를 호출하면 영속성 컨텍스트에서 관리됨.
+1. **비영속 (Transient)** → `new`로 생성했지만 아직 JPA가 관리하지 않는 상태.
+2. **영속 (Managed)** → `persist()`를 호출하면 영속성 컨텍스트에서 관리됨.
 3. **준영속 (Detached)** → **`detach()`** 호출하거나 **`clear()`**, **`close()`** 하면 관리 대상에서 제외됨.
 4. **삭제 (Removed)** → **`remove()`** 호출 시 DB에서 삭제됨.
 
@@ -68,7 +68,7 @@ JPA에서는 객체 간 연관관계를 **외래 키가 아닌 객체 자체로
 ### **✅ 연관관계 설정 시 주의할 점**
 
 - **연관관계의 주인(owner)을 명확히 해야 함.**
-- **`@ManyToOne`**이 주인이고, **`@OneToMany`**는 **`mappedBy`**를 사용해 연관관계를 설정.
+- `@ManyToOne`이 주인이고, `@OneToMany`는 `mappedBy`를 사용해 연관관계를 설정.
 
 ```java
 @Entity
@@ -96,7 +96,7 @@ class Team {
 
 ## **6. 프록시와 지연 로딩**
 
-- JPA는 엔티티를 바로 조회하지 않고, 필요할 때 실제 데이터를 가져오는 **지연 로딩(LAZY Loading)**을 지원.
+- JPA는 엔티티를 바로 조회하지 않고, 필요할 때 실제 데이터를 가져오는 **지연 로딩**(LAZY Loading)을 지원.
 - **즉시 로딩(EAGER) 사용 시 성능 문제 발생 가능.**
 - **`@OneToMany`**, **`@ManyToMany`** 기본값: **LAZY**
 - **`@ManyToOne`**, **`@OneToOne`** 기본값: **EAGER**
@@ -112,7 +112,7 @@ private Team team;
 
 ## **7. JPQL과 QueryDSL**
 
-JPA는 **JPQL (Java Persistence Query Language)**을 제공하여 SQL을 객체 중심으로 변환.
+JPA는 **JPQL** (Java Persistence Query Language)을 제공하여 SQL을 객체 중심으로 변환.
 
 ### **✅ JPQL 기본 문법**
 
@@ -155,7 +155,7 @@ public void updateMember(Long id) {
 ## **9. N+1 문제와 해결 방법**
 
 - 연관된 엔티티를 **`LAZY`** 로딩할 때, 추가적인 쿼리가 반복 실행되는 문제.
-- 예제: 회원을 조회할 때 **`team`**을 **`Lazy`**로딩하면, 회원 개수만큼 **`SELECT`** 쿼리가 실행됨.
+- 예제: 회원을 조회할 때 `team`을 `Lazy`로딩하면, 회원 개수만큼 **`SELECT`** 쿼리가 실행됨.
 
 ### **✅ 해결 방법**
 

@@ -161,7 +161,7 @@ Feature flag가 켜지고 꺼질 때마다 system prompt의 문단이 나타났�
 - 불가피하다면 `SYSTEM_PROMPT_DYNAMIC_BOUNDARY` 이후에 배치
 - Message attachment 메커니즘 활용
 
-목표는 **단조적 안정성(monotonic stability)**입니다. Prefix의 system prompt 블록이 session 전체에 걸쳐 변하지 않아야 합니다.
+목표는 **단조적 안정성**(monotonic stability)입니다. Prefix의 system prompt 블록이 session 전체에 걸쳐 변하지 않아야 합니다.
 
 
 ---
@@ -269,7 +269,7 @@ Pattern 2의 원칙은 "정밀도를 낮춰 변경 빈도를 줄인다"입니다
 ### 사례 2: [CONTEXT.md](http://context.md/) 커밋 누락 — Pattern 6의 단조 안정성
 
 
-Pattern 6의 핵심은 **단조 안정성(monotonic stability)**입니다. "말했다가 제거하는 것보다 아예 말하지 않는 것이 낫다." Prefix가 session 전체에 걸쳐 변하지 않아야 한다는 원칙입니다.
+Pattern 6의 핵심은 **단조 안정성**(monotonic stability)입니다. "말했다가 제거하는 것보다 아예 말하지 않는 것이 낫다." Prefix가 session 전체에 걸쳐 변하지 않아야 한다는 원칙입니다.
 
 
 이 원칙을 코드 레이어가 아닌 메타데이터 레이어에서 위반하고 있었습니다. 오케스트레이터는 PR 생성 후 `CONTEXT.md`를 수정했지만, 커밋 없이 세션을 종료했습니다.

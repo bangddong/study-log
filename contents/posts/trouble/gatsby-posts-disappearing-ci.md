@@ -38,7 +38,7 @@ git push → GitHub Actions 트리거
 ```
 
 
-여기서 **`actions/checkout`****은 git에 커밋된 파일만 가져옵니다.** Notion에서 생성한 파일은 git에 없으면 `checkout` 이후에도 없습니다. 그래서 `convert-notion.mjs`가 그 공백을 채워줘야 합니다.
+여기서 **`actions/checkout`은 git에 커밋된 파일만 가져옵니다.** Notion에서 생성한 파일은 git에 없으면 `checkout` 이후에도 없습니다. 그래서 `convert-notion.mjs`가 그 공백을 채워줘야 합니다.
 
 
 ---

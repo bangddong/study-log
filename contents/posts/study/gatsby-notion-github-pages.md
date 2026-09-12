@@ -122,7 +122,7 @@ run();
 포인트는 두 가지입니다.
 
 
-**Notion API 응답에서** **`page.properties`****를 직접 파싱한다.** 예전 `notion-to-md`에는 `n2m.metaData()` 메서드가 있었지만 v3에서 제거됐습니다. `notion.databases.query()`가 반환하는 `page.properties`에서 직접 꺼내는 방식으로 바꿨습니다.
+**Notion API 응답에서** **`page.properties`를 직접 파싱한다.** 예전 `notion-to-md`에는 `n2m.metaData()` 메서드가 있었지만 v3에서 제거됐습니다. `notion.databases.query()`가 반환하는 `page.properties`에서 직접 꺼내는 방식으로 바꿨습니다.
 
 
 **하위 디렉토리를 자동 생성한다.** Slug가 `study/my-post`처럼 경로를 포함할 수 있으므로, `fs.mkdirSync(..., { recursive: true })`로 중간 디렉토리를 미리 만들어줍니다.
