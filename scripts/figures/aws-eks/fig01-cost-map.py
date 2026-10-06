@@ -10,7 +10,8 @@
 
 실행:
   python3 scripts/figures/aws-eks/fig01-cost-map.py
-  qlmanage -t -s 1120 -o static/images/aws-eks static/images/aws-eks/fig01-cost-map.svg
+  rsvg-convert -w 1120 static/images/aws-eks/fig01-cost-map.svg \
+    -o static/images/aws-eks/fig01-cost-map.png        # brew install librsvg
 
 아이콘: AWS Architecture Icons (https://aws.amazon.com/architecture/icons/)
   AWS 가 "아키텍처 다이어그램 작성" 용도로 배포한다. 다이어그램을 **직접 그리는 데**만 쓴다.
@@ -36,10 +37,12 @@ I = {
  "igw": f"{R}/Res_Networking-Content-Delivery/Res_Amazon-VPC_Internet-Gateway_48.svg",
  "cloud": f"{G}/AWS-Cloud_32.svg", "vpc": f"{G}/Virtual-private-cloud-VPC_32.svg",
 }
-# 🔴 qlmanage 는 정사각으로 렌더하므로 캔버스도 정사각이어야 한다.
-#    아래 여백을 sips 로 잘라 보려 했으나 sips -c 는 --cropOffset 을 줘도 **가운데 기준**이라
-#    제목이 날아간다. 자르지 말고 여백을 그대로 둔다.
-W = H = 1120
+# 🔴 캔버스는 내용에 딱 맞춘다. 초판은 `qlmanage` 로 PNG 를 뽑느라 정사각(1120x1120)이었고,
+#    내용이 y=816 에서 끝나 **아래 300px 가 빈 여백 + 중복 문구**였다. 글에서 칼럼 폭에 맞춰
+#    축소되므로 그 여백만큼 도표가 작아진다(사용자 지적, 2026-10-06).
+#    `rsvg-convert`(brew install librsvg)는 정사각 제약이 없다. sips -c 는 쓰지 마라 —
+#    --cropOffset 을 줘도 **가운데 기준**이라 제목이 날아간다.
+W, H = 1120, 840
 F = "-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif"
 M = "ui-monospace,SFMono-Regular,Menlo,monospace"
 K8S = "#326ce5"          # 쿠버네티스 파랑. AWS 리소스가 아닌 것은 이 색으로 통일한다
@@ -77,7 +80,9 @@ def box(x, y, w, h, stroke, dash="", fill="none", rx=8, sw=2):
 def cost(x, y, s, hot=True):
     c = HOT if hot else WARM
     e(f'<rect x="{x}" y="{y}" width="{len(s)*7.4+40}" height="22" rx="11" fill="{c}"/>')
-    txt(x + 9, y + 16, f"💰 {s}", 12, 700, "#fff", font=M)
+    # 🔴 이모지를 쓰지 마라. rsvg-convert 는 컬러 이모지 폰트를 렌더하지 못해 흑백 글리프가
+    #    된다(2026-10-06 실측). 배지 색(빨강=시간당·주황=월)이 이미 같은 정보를 준다.
+    txt(x + 10, y + 16, s, 12, 700, "#fff", font=M)
 
 def pod(x, y, label, note=""):
     """Pod 은 쿠버네티스 개념이라 AWS 아이콘을 쓰지 않는다."""
@@ -95,7 +100,7 @@ e('<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" ma
 e(f'<rect width="{W}" height="{H}" fill="#ffffff"/>')
 
 txt(44, 50, "이 시리즈로 만드는 구성과 돈이 나가는 지점", 25, 700)
-txt(44, 78, "서울 리전 · 💰 빨강은 시간당 과금, 주황은 월 과금 · 파란 상자는 쿠버네티스 개념(AWS 리소스 아님)",
+txt(44, 78, "서울 리전 · 빨강 배지는 시간당 과금, 주황 배지는 월 과금 · 파란 상자는 쿠버네티스 개념(AWS 리소스 아님)",
     13.5, 400, "#5a6b7b")
 
 # 사용자도 AWS 리소스가 아니므로 라벨로 그린다 (Pod 과 같은 규칙)
@@ -146,13 +151,9 @@ for key, x, name, sub in (("ecr", 560, "ECR", "이미지 보관"),
     ico(key, x, 636, 44); txt(x + 54, 660, name, 13.5, 600); txt(x + 54, 678, sub, 11.5, 400, "#5a6b7b")
 txt(560, 718, "이 셋은 사실상 $0 입니다", 12, 400, "#5a6b7b")
 
-txt(44, 866, "실습이 끝나면 VPC 안쪽을 전부 destroy 합니다. 남는 것은 초록 상자뿐이고 월 $1 남짓입니다.",
-    14.5, 500)
-txt(44, 898, "시간당  합계  $0.1405/h   =   파드를 하나도 안 띄워도 나가는 돈 (전체의 60%)",
-    13.5, 700, HOT, font=M)
-txt(44, 952, "아이콘: AWS Architecture Icons (https://aws.amazon.com/architecture/icons/)",
-    12, 400, "#879196")
-txt(44, 974, "수치는 실제 청구·실행 기록 · 작도는 AI 가 코드로 했습니다", 12, 400, "#879196")
+# 🔴 그림 아래 설명문을 넣지 않는다. 본문이 이미 같은 말을 하고(고정비 60% · destroy 후 월 $1),
+#    출처와 AI 작도 고지는 마크다운 캡션이 진다. 이미지 안의 글자는 검색도 번역도 안 되므로
+#    중복이면 덜어내는 쪽이 맞다.
 e("</svg>")
 
 out = "static/images/aws-eks/fig01-cost-map.svg"

@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="1120" viewBox="0 0 1120 1120">
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="840" viewBox="0 0 1120 840">
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5a6b7b"/></marker></defs>
-<rect width="1120" height="1120" fill="#ffffff"/>
+<rect width="1120" height="840" fill="#ffffff"/>
 <text x="44" y="50" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="25" font-weight="700" fill="#16191f" text-anchor="start">이 시리즈로 만드는 구성과 돈이 나가는 지점</text>
-<text x="44" y="78" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="13.5" font-weight="400" fill="#5a6b7b" text-anchor="start">서울 리전 · 💰 빨강은 시간당 과금, 주황은 월 과금 · 파란 상자는 쿠버네티스 개념(AWS 리소스 아님)</text>
+<text x="44" y="78" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="13.5" font-weight="400" fill="#5a6b7b" text-anchor="start">서울 리전 · 빨강 배지는 시간당 과금, 주황 배지는 월 과금 · 파란 상자는 쿠버네티스 개념(AWS 리소스 아님)</text>
 <rect x="40" y="298" width="104" height="46" rx="10" fill="#f6f7f8" stroke="#5a6b7b" stroke-width="1.8"/>
 <text x="92" y="327" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="14" font-weight="700" fill="#5a6b7b" text-anchor="middle">사용자</text>
 <line x1="152" y1="321" x2="172" y2="321" stroke="#5a6b7b" stroke-width="2.5" marker-end="url(#a)"/>
@@ -43,7 +43,7 @@
 </svg>
 <text x="290" y="306" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="14" font-weight="600" fill="#16191f" text-anchor="start">Application Load Balancer</text>
 <rect x="290" y="316" width="106.60000000000001" height="22" rx="11" fill="#d13212"/>
-<text x="299" y="332" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700" fill="#fff" text-anchor="start">💰 $0.0405/h</text>
+<text x="300" y="332" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700" fill="#fff" text-anchor="start">$0.0405/h</text>
 <svg x="560" y="288" width="40" height="40" viewBox="0 0 80 80">
     
     <g id="Icon-Architecture/64/Arch_AWS-Certificate-Manager_64" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -69,7 +69,7 @@
 </svg>
 <text x="298" y="436" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#16191f" text-anchor="start">EC2 노드  t4g.small</text>
 <rect x="298" y="446" width="106.60000000000001" height="22" rx="11" fill="#d13212"/>
-<text x="307" y="462" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700" fill="#fff" text-anchor="start">💰 $0.0208/h</text>
+<text x="308" y="462" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700" fill="#fff" text-anchor="start">$0.0208/h</text>
 <rect x="246" y="484" width="118" height="46" rx="10" fill="#f2f7fe" stroke="#326ce5" stroke-width="1.8"/>
 <text x="305" y="506" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="13" font-weight="700" fill="#326ce5" text-anchor="middle">앱</text>
 <text x="305" y="522" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="400" fill="#6b7f99" text-anchor="middle">Pod</text>
@@ -90,7 +90,7 @@
 <text x="760" y="418" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="16" font-weight="700" fill="#16191f" text-anchor="start">EKS 컨트롤플레인</text>
 <text x="760" y="438" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="12.5" font-weight="400" fill="#5a6b7b" text-anchor="start">AWS 가 관리합니다</text>
 <rect x="696" y="458" width="165.8" height="22" rx="11" fill="#d13212"/>
-<text x="705" y="474" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700" fill="#fff" text-anchor="start">💰 $0.10/h  =  월 $73</text>
+<text x="706" y="474" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700" fill="#fff" text-anchor="start">$0.10/h  =  월 $73</text>
 <text x="696" y="508" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#d13212" text-anchor="start">노드가 0대여도 계속 나가고,</text>
 <text x="696" y="528" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="12.5" font-weight="700" fill="#d13212" text-anchor="start">클러스터를 지워야만 멈춥니다.</text>
 <rect x="208" y="592" width="840" height="192" rx="8" fill="none" stroke="#7aa116" stroke-width="2" stroke-dasharray="7 5"/>
@@ -106,7 +106,7 @@
 </svg>
 <text x="288" y="660" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="14" font-weight="600" fill="#16191f" text-anchor="start">EBS 볼륨 10GB</text>
 <rect x="288" y="670" width="91.80000000000001" height="22" rx="11" fill="#ff9900"/>
-<text x="297" y="686" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700" fill="#fff" text-anchor="start">💰 $0.91/월</text>
+<text x="298" y="686" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12" font-weight="700" fill="#fff" text-anchor="start">$0.91/월</text>
 <text x="288" y="718" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="12" font-weight="400" fill="#5a6b7b" text-anchor="start">⑩편. 데이터가 여기 남습니다</text>
 <svg x="560" y="636" width="44" height="44" viewBox="0 0 80 80">
     
@@ -144,8 +144,4 @@
 <text x="984" y="660" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#16191f" text-anchor="start">예산 알림</text>
 <text x="984" y="678" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="11.5" font-weight="400" fill="#5a6b7b" text-anchor="start">③편</text>
 <text x="560" y="718" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="12" font-weight="400" fill="#5a6b7b" text-anchor="start">이 셋은 사실상 $0 입니다</text>
-<text x="44" y="866" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="14.5" font-weight="500" fill="#16191f" text-anchor="start">실습이 끝나면 VPC 안쪽을 전부 destroy 합니다. 남는 것은 초록 상자뿐이고 월 $1 남짓입니다.</text>
-<text x="44" y="898" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13.5" font-weight="700" fill="#d13212" text-anchor="start">시간당  합계  $0.1405/h   =   파드를 하나도 안 띄워도 나가는 돈 (전체의 60%)</text>
-<text x="44" y="952" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="12" font-weight="400" fill="#879196" text-anchor="start">아이콘: AWS Architecture Icons (https://aws.amazon.com/architecture/icons/)</text>
-<text x="44" y="974" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" font-size="12" font-weight="400" fill="#879196" text-anchor="start">수치는 실제 청구·실행 기록 · 작도는 AI 가 코드로 했습니다</text>
 </svg>

@@ -11,6 +11,28 @@ const n2m = new NotionToMarkdown({ notionClient: notion });
 
 const outputDir = './contents/posts';
 
+// 🔴 `$` 는 katex 의 수식 구분자다 (gatsby-config 의 gatsby-remark-katex).
+//    본문에 금액이 둘 이상 나오면 그 사이가 통째로 수식으로 렌더돼 글자가 한 자씩
+//    쏟아진다. "AWS EKS 실습기 ①" 에서 4곳이 깨진 채 배포됐다 (2026-10-06 실측).
+//    예: `$200 으로 메웁니다 ... 들어가는 돈은 $3` → 가운데 전부가 수식
+//    비용을 다루는 글은 `$` 가 수십 번 나오므로 글마다 손으로 고칠 일이 아니다.
+//    코드 블록·인라인 코드 안에서는 katex 가 동작하지 않으므로 건드리지 않는다.
+//    (거기까지 escape 하면 역슬래시가 그대로 보인다.)
+function escapeDollars(md) {
+  const esc = (t) => t.replace(/(?<!\\)\$/g, '\\$');
+  return md
+    .split(/(```[\s\S]*?```)/g)
+    .map((seg, i) =>
+      i % 2 === 1
+        ? seg
+        : seg
+            .split(/(`[^`\n]*`)/g)
+            .map((s, j) => (j % 2 === 1 ? s : esc(s)))
+            .join('')
+    )
+    .join('');
+}
+
 function extractText(richText) {
   return richText?.map(t => t.plain_text).join('') || '';
 }
@@ -38,7 +60,7 @@ async function run() {
     const mdString = n2m.toMarkdownString(mdblocks);
 
     const frontMatter = { title, date, tags, series, emoji };
-    const markdownBody = typeof mdString === 'string' ? mdString : (mdString.parent ?? '');
+    const markdownBody = escapeDollars(typeof mdString === 'string' ? mdString : (mdString.parent ?? ''));
     const filename = (slug || title.replace(/\s+/g, '-').toLowerCase()) + '.md';
 
     const filepath = `${outputDir}/${filename}`;
