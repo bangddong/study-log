@@ -73,12 +73,14 @@ Slug: trouble/post-name
 - **본문에 줄표(—)를 쓰지 않는다.** 예외는 코드 주석, 이미지 캡션 라벨, 참고문헌 원제목뿐.
 - **같은 어미를 연달아 쓰지 않는다.** `~입니다.` 4연속 금지(3연속이 상한). 위 줄표 규칙을
   마침표로만 지키면 구조적으로 어겨지므로 함께 본다. 고칠 때 문장을 늘리지 말고 연결어미로 잇는다.
-- 🔴 **문장 길이는 평균이 아니라 분산으로 본다.** 평균만 맞추면 모든 문장이 비슷해져
-  규칙을 다 지켜도 딱딱하다(2026-10-01 실제 사고). 발행분 기준 **표준편차 28 · 70자 이상 9%**.
+- 🔴 **호흡은 문장이 아니라 문단으로 본다 (2026-10-07).** 생각 하나를 서너 문장에 걸쳐 풀고,
+  접속어를 지우지 않고, 짧은 단정문을 심지 않는다. 기준은 `writing-style.md` 「흐름 프로파일」.
   초안은 기계로 잰다:
   ```bash
-  python3 .claude/skills/write-study-post/check-prose.py <초안.md>
+  python3 .claude/skills/write-study-post/check-prose.py --flow <초안.md>
   ```
+  (10-01 에 넣은 "문장 길이 분산" 기준은 다 통과하고도 딱딱한 글이 나와서 내렸다. `--flow` 없이 돌리면 예전 기준이다.)
+- 그림은 코드 블록 안 ASCII 나 **움직이는 SVG**(`scripts/figures/<시리즈>/anim*.py`). mermaid 는 쓰지 않는다.
 
 발행까지 하려면 `write-study-post` 스킬을 사용한다.
 다른 도구·에이전트에 이 문체를 이식하려면 `.claude/writing-style-prompt.md`의 코드블록을 복사해 쓴다.
@@ -106,14 +108,14 @@ Slug: trouble/post-name
 
 **Series는 연속된 글에만 설정한다.** 단독 글(삽질기, 개념 정리 등)은 Series를 비워두면 시리즈 위젯 없이 Tags로만 구분된다. Slug가 같은 `spring/` 하위여도 연재가 아니면 Series를 설정하지 않는다.
 
-**Tags는 페이지 생성 시 포함할 수 없다.** multi_select는 create API에서 실패한다.
-Tags는 반드시 생성 직후 `notion-update-page`로 별도 설정한다.
+**Tags는 예전에는 페이지 생성 시 포함할 수 없었다**(multi_select가 create에서 실패).
+2026-10-06 에는 `"Tags": ["AWS", "EKS"]` 배열로 create 에 넣어 성공했다. 실패하면 생성 직후 `notion-update-page`로 따로 넣는다.
 
 ```json
 { "Tags": "[\"AI\",\"Claude Code\"]" }
 ```
 
-Tags 허용값: `Spring`, `JPA`, `Querydsl`, `Transaction`, `AI`, `Claude Code`, `Troubleshooting`
+Tags 허용값: `Spring`, `JPA`, `Querydsl`, `Transaction`, `AI`, `Claude Code`, `Troubleshooting`, `AWS`, `EKS`
 
 ---
 
@@ -131,7 +133,15 @@ Notion 페이지 작성 완료 후 **반드시 멈추고** 사용자에게 아�
 
 ### 3단계 — CI 트리거
 
-사용자 승인 후 main에 push한다. 변경사항이 없으면 빈 커밋을 사용한다.
+사용자 승인 후 CI 를 돌린다. **본문만 바뀌었으면 커밋 없이 수동 실행**으로 충분하다(2026-10-06, `workflow_dispatch` 추가).
+
+```bash
+gh workflow run ci.yml -R bangddong/study-log --ref main
+```
+
+🔴 이미 발행한 글을 고칠 때는 Notion `배포상태`를 `작성완료`로 되돌려야 변환기가 다시 가져간다.
+
+레포 파일(이미지 등)이 바뀌었거나 예전 방식을 쓰려면 main 에 push 한다. 변경사항이 없으면 빈 커밋을 사용한다.
 
 ```bash
 git pull origin main
