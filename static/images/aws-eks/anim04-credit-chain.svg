@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 400" width="1120" height="400" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" role="img" aria-label="Identity Center를 켜면 조직이 만들어지고, 유료 플랜으로 바뀌고, 크레딧이 만료됩니다">
+<style>.s0{opacity:0;animation:st0 14s ease-out infinite}@keyframes st0{0%,4%{opacity:0}10%,94%{opacity:1}100%{opacity:0}}.s1{opacity:0;animation:st1 14s ease-out infinite}@keyframes st1{0%,20%{opacity:0}26%,94%{opacity:1}100%{opacity:0}}.s2{opacity:0;animation:st2 14s ease-out infinite}@keyframes st2{0%,36%{opacity:0}42%,94%{opacity:1}100%{opacity:0}}.s3{opacity:0;animation:st3 14s ease-out infinite}@keyframes st3{0%,52%{opacity:0}58%,94%{opacity:1}100%{opacity:0}}@media (prefers-reduced-motion:reduce){.s0{animation:none;opacity:1}.s1{animation:none;opacity:1}.s2{animation:none;opacity:1}.s3{animation:none;opacity:1}}</style>
+<rect width="1120" height="400" rx="14" fill="#fff"/>
+<rect x=".5" y=".5" width="1119" height="399" rx="14" fill="none" stroke="#d9dfe5"/>
+<text x="44" y="62" font-size="25" font-weight="700" fill="#16202b">버튼 하나가 크레딧까지 이어집니다</text>
+<text x="44" y="92" font-size="14" fill="#5a6b7b">로그인 방식을 고른 것뿐인데, 세 단계 뒤에 크레딧이 걸려 있습니다</text>
+<g class="s0">
+<rect x="44" y="150" width="232" height="130" rx="12" fill="#fafbfc" stroke="#16202b" stroke-width="2"/><text x="62" y="184" font-size="13" font-weight="700" fill="#16202b">1</text><text x="62" y="218" font-size="16.5" font-weight="700" fill="#16202b">Identity Center를 켭니다</text>
+<text x="62" y="244" font-size="13" fill="#5a6b7b">AWS가 권하는 로그인</text>
+<text x="62" y="263" font-size="13" fill="#5a6b7b">방식입니다</text>
+</g>
+<g class="s1">
+<path d="M282,215.0 L300,215.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M300,208.0 L309,215.0 L300,222.0 z" fill="#5a6b7b"/>
+<rect x="310" y="150" width="232" height="130" rx="12" fill="#fafbfc" stroke="#16202b" stroke-width="2"/><text x="328" y="184" font-size="13" font-weight="700" fill="#16202b">2</text><text x="328" y="218" font-size="16.5" font-weight="700" fill="#16202b">조직이 함께 만들어집니다</text>
+<text x="328" y="244" font-size="13" fill="#5a6b7b">Identity Center가</text>
+<text x="328" y="263" font-size="13" fill="#5a6b7b">조직을 필요로 합니다</text>
+</g>
+<g class="s2">
+<path d="M548,215.0 L566,215.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M566,208.0 L575,215.0 L566,222.0 z" fill="#5a6b7b"/>
+<rect x="576" y="150" width="232" height="130" rx="12" fill="#fafbfc" stroke="#e07a10" stroke-width="2"/><text x="594" y="184" font-size="13" font-weight="700" fill="#e07a10">3</text><text x="594" y="218" font-size="16.5" font-weight="700" fill="#16202b">유료 플랜으로 바뀝니다</text>
+<text x="594" y="244" font-size="13" fill="#5a6b7b">조직을 만들면 무료 플랜에서</text>
+<text x="594" y="263" font-size="13" fill="#5a6b7b">벗어납니다</text>
+</g>
+<g class="s3">
+<path d="M814,215.0 L832,215.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M832,208.0 L841,215.0 L832,222.0 z" fill="#5a6b7b"/>
+<rect x="842" y="150" width="232" height="130" rx="12" fill="#fff5f3" stroke="#d13212" stroke-width="2"/><text x="860" y="184" font-size="13" font-weight="700" fill="#d13212">4</text><text x="860" y="218" font-size="16.5" font-weight="700" fill="#16202b">크레딧이 만료됩니다</text>
+<text x="860" y="244" font-size="13" fill="#5a6b7b">확인 화면의 경고문에 그렇게</text>
+<text x="860" y="263" font-size="13" fill="#5a6b7b">적혀 있습니다</text>
+</g>
+<text x="44" y="324" font-size="14.5" fill="#16202b">첫 번째 칸의 버튼에는 크레딧 이야기가 없습니다. 경고는 확인 화면까지 가야 보입니다.</text>
+<text x="44" y="372" font-size="12.5" fill="#5a6b7b">그림은 AI가 코드로 그렸습니다</text>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" role="img" aria-label="같은 지출도 크레딧을 빼고 재면 0에 붙어 있고, 크레딧 전 금액으로 재면 10달러 선을 넘어 알림이 울립니다">
+<style>
+.ln{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 12s linear infinite}
+.bell{opacity:0;animation:ring 12s linear infinite}
+.end{opacity:0;animation:pop 12s linear infinite}
+@keyframes draw{0%{stroke-dashoffset:1}60%,94%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+@keyframes ring{0%,44%{opacity:0}48%,94%{opacity:1}100%{opacity:0}}
+@keyframes pop{0%,58%{opacity:0}64%,94%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.ln{animation:none;stroke-dashoffset:0}.bell,.end{animation:none;opacity:1}}</style>
+<rect width="1120" height="540" rx="14" fill="#fff"/>
+<rect x=".5" y=".5" width="1119" height="539" rx="14" fill="none" stroke="#d9dfe5"/>
+<text x="44" y="62" font-size="25" font-weight="700" fill="#16202b">크레딧을 빼고 재면 알림은 울리지 않습니다</text>
+<text x="44" y="92" font-size="14" fill="#5a6b7b">같은 지출을 두 가지 방식으로 잰 예산입니다. 곡선은 설명을 위한 예시이고 실제 기록이 아닙니다</text>
+<line x1="110" y1="440.0" x2="860" y2="440.0" stroke="#d9dfe5"/>
+<text x="96" y="445.0" font-size="13" fill="#5a6b7b" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">$0</text>
+<line x1="110" y1="346.2" x2="860" y2="346.2" stroke="#d9dfe5"/>
+<text x="96" y="351.2" font-size="13" fill="#5a6b7b" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">$5</text>
+<line x1="110" y1="252.5" x2="860" y2="252.5" stroke="#d9dfe5"/>
+<text x="96" y="257.5" font-size="13" fill="#5a6b7b" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">$10</text>
+<line x1="110" y1="158.8" x2="860" y2="158.8" stroke="#d9dfe5"/>
+<text x="96" y="163.8" font-size="13" fill="#5a6b7b" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">$15</text>
+<line x1="110" y1="252.5" x2="860" y2="252.5" stroke="#16202b" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="118" y="244.5" font-size="13" font-weight="700" fill="#16202b">첫 알림 선 $10</text>
+<text x="485.0" y="470" font-size="13" fill="#5a6b7b" text-anchor="middle">시간이 지나며 쓴 돈이 쌓입니다 →</text>
+<path d="M110.0,440.0 L860.0,177.5" class="ln" pathLength="1" fill="none" stroke="#1d8102" stroke-width="4" stroke-linecap="round"/>
+<path d="M110.0,437.8 L860.0,437.8" class="ln" pathLength="1" fill="none" stroke="#d13212" stroke-width="4" stroke-linecap="round"/>
+<g class="bell"><circle cx="645.7" cy="252.5" r="9" fill="#fff" stroke="#1d8102" stroke-width="3"/><rect x="583.7" y="194.5" width="124" height="34" rx="17" fill="#1d8102"/><text x="645.7" y="216.5" font-size="14.5" font-weight="700" fill="#fff" text-anchor="middle">알림이 옵니다</text></g>
+<g class="end"><text x="882" y="179.5" font-size="15" font-weight="700" fill="#1d8102">크레딧 전 금액으로 잼</text><text x="882" y="200.5" font-size="13" fill="#5a6b7b" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">include_credit = false</text><text x="882" y="220.5" font-size="13" fill="#5a6b7b">쓴 만큼 올라갑니다</text></g>
+<g class="end"><text x="882" y="393.8" font-size="15" font-weight="700" fill="#d13212">크레딧을 빼고 잼</text><text x="882" y="414.8" font-size="13" fill="#5a6b7b">크레딧이 지출을 지웁니다</text><text x="882" y="434.8" font-size="13" fill="#5a6b7b">크레딧이 남은 동안 $0</text></g>
+<text x="44" y="512" font-size="12.5" fill="#5a6b7b">곡선은 예시입니다. 그림은 AI가 코드로 그렸습니다</text>
+</svg>
