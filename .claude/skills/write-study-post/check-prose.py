@@ -12,6 +12,7 @@
 사용:
   python3 check-prose.py <초안.md> [...]                    초안 채점
   python3 check-prose.py --baseline 'contents/posts/**/*.md'  기준선 재계산
+  python3 check-prose.py --flow <초안.md> [...]             흐름 프로파일 (문단 기준, EKS 실습기부터)
 """
 import io, re, sys, glob, statistics as st, collections
 
@@ -141,11 +142,114 @@ def baseline(pattern):
     print("  → 이 값을 BASE 딕셔너리에 반영할 것")
 
 
+# ── 흐름 프로파일 (2026-10-07) ─────────────────────────────────────────────
+# 위 기준은 **문장** 길이의 분산을 리듬으로 본다. 그 기준을 다 통과한 글이 여전히 딱딱했다.
+# 원인은 문장이 아니라 **문단**이었다. 참고 글(kciter.so, 서버 모니터링 분석 가이드, 414문장)과
+# 재서 비교하니 문장 표준편차는 참고 글이 오히려 낮고(21.3), 다른 것은 이쪽이었다.
+#
+#                       참고 글   EKS ①②③ 초판
+#   문단당 문장 수        3.9       2.1~2.4      ← 생각 하나를 두 문장 하고 끊었다
+#   문단 평균 길이        179자     84~95자
+#   20자 이하 문장        7.2%      19~33%       ← 분산을 맞추려고 심은 단정문이 과했다
+#   접속어로 시작         14.0%     0~3%         ← 4% 상한이 문장 사이의 논리를 지웠다
+#
+# 그래서 이 프로파일은 분산을 보지 않고 문단을 본다. 코드나 표를 소개하는 한 줄
+# ("확인합니다." 같은 안내문)은 튜토리얼에 꼭 필요하므로 문단 통계에서 뺀다.
+FLOW_BASE = {"spp": 3.9, "plen": 179, "short": 7.2, "conj": 14.0, "mean": 45.4}
+FLOW_TOL = {"spp": (3.0, None), "plen": (130, None), "short": (None, 12.0), "conj": (5.0, 18.0),
+            "mean": (38.0, 52.0), "top_end": (None, 14.0), "mark": (None, 3)}
+FLOW_CONJ = ("그런데", "그래서", "하지만", "따라서", "반면", "그리고", "다만", "물론", "즉", "또한", "그러나",
+             "그러면", "반대로", "여기서", "이때", "예를 들어", "그다음", "마지막으로", "먼저", "다음으로",
+             "대신", "그래도", "결국", "덕분에", "문제는", "참고로")
+
+
+def flow_paragraphs(path):
+    """(문단 텍스트, 안내문 여부) 목록. 안내문 = 바로 뒤에 코드블록·표가 오는 한 문장짜리 문단."""
+    t = io.open(path, encoding="utf-8").read()
+    t = re.sub(r"^---\n.*?\n---\n", "", t, flags=re.S)
+    blocks, inblock = [], False
+    for raw in t.split("\n\n"):
+        b = raw.strip()
+        if not b:
+            continue
+        fence = b.count("```")
+        if inblock:
+            if fence % 2 == 1:
+                inblock = False
+            blocks.append(("other", b))
+            continue
+        if b.startswith("```"):
+            if fence % 2 == 1:
+                inblock = True
+            blocks.append(("other", b))
+        elif b[0] in "#|>" or b.startswith(("- ", "* ", "![", "---")):
+            blocks.append(("other", b))
+        else:
+            blocks.append(("prose", re.sub(r"[*`\[\]]", "", b)))
+    out = []
+    for i, (kind, b) in enumerate(blocks):
+        if kind != "prose":
+            continue
+        nxt = blocks[i + 1][1] if i + 1 < len(blocks) else ""
+        n = len([x for x in re.split(r"(?<=[.!?])\s+", b) if len(x.strip()) > 3])
+        out.append((b, n <= 1 and nxt.startswith(("```", "|"))))
+    return out
+
+
+def flow_report(path):
+    paras = flow_paragraphs(path)
+    body = [b for b, lead in paras if not lead]
+    split = lambda b: [x.strip() for x in re.split(r"(?<=[.!?])\s+", b) if len(x.strip()) > 3]
+    sents = [x for b, _ in paras for x in split(b)]
+    if not body or not sents:
+        print(f"{path}: 산문 없음")
+        return False
+    ends = collections.Counter()
+    for x in sents:
+        m = re.search(r"([가-힣]{2,5})[.!?]$", x)
+        ends[m.group(1) if m else "기타"] += 1
+    raw = io.open(path, encoding="utf-8").read()
+    v = {
+        "spp": st.mean(len(split(b)) for b in body),
+        "plen": st.mean(len(b) for b in body),
+        "short": len([x for x in sents if len(x) <= 20]) / len(sents) * 100,
+        "conj": len([x for x in sents if re.match(r"(?:%s)[ ,]" % "|".join(FLOW_CONJ), x)]) / len(sents) * 100,
+        "mean": st.mean(len(x) for x in sents),
+        "top_end": ends.most_common(1)[0][1] / len(sents) * 100,
+        "mark": len(re.findall("🔴|⚠️", raw)),
+    }
+    lead = len(paras) - len(body)
+    print(f"\n── {path}  [흐름]  문단 {len(body)}개 (+안내문 {lead}) · 문장 {len(sents)}")
+    labels = [("spp", "문단당 문장 수", ""), ("plen", "문단 평균 길이", "자"), ("short", "20자 이하 문장", "%"),
+              ("conj", "접속어로 시작", "%"), ("mean", "문장 평균", "자"), ("top_end", "최빈 종결어미", "%"),
+              ("mark", "경고 표시(🔴⚠️)", "개")]
+    ok = True
+    for key, label, unit in labels:
+        lo, hi = FLOW_TOL[key]
+        bad = (lo is not None and v[key] < lo) or (hi is not None and v[key] > hi)
+        ok = ok and not bad
+        base = f"참고 {FLOW_BASE[key]:>5.1f}" if key in FLOW_BASE else " " * 10
+        rng = f"{'' if lo is None else lo}~{'' if hi is None else hi}"
+        print(f"   {label:<16}{v[key]:>7.1f}{unit:<2} {base}  허용 {rng:<10} {'🔴' if bad else '✅'}")
+    thin = sorted((b for b in body if len(split(b)) <= 2), key=len)[:3]
+    if v["spp"] < FLOW_TOL["spp"][0] and thin:
+        print("   🔴 문단이 얇다. 생각 하나를 서너 문장에 걸쳐 푼다. 가장 얇은 문단:")
+        for b in thin:
+            print(f"        [{len(b):>3}자] {b[:60]}")
+    if v["short"] > FLOW_TOL["short"][1]:
+        print("   🔴 짧은 단정문이 많다. 앞뒤 문장에 이어 붙인다. 예:")
+        for x in [x for x in sents if len(x) <= 20][:4]:
+            print(f"        {x}")
+    return ok
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     if not args:
         print(__doc__)
         sys.exit(2)
+    if args[0] == "--flow":
+        sys.exit(0 if all([flow_report(a) for a in args[1:]]) else 1)
     if args[0] == "--baseline":
         baseline(args[1])
         sys.exit(0)
