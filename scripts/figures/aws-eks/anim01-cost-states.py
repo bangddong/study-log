@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""AWS EKS 실습기 ①편 Anim.1 — 무엇을 꺼야 요금이 멈추는가.
+"""AWS EKS 실습기 ①편 Anim.1 — 노드를 꺼도 돈은 계속 나갑니다.
 
 움직이는 SVG 다. 스크립트 없이 SVG 안의 CSS @keyframes 만으로 12초를 반복한다.
 그래서 마크다운의 평범한 이미지(![](...svg))로 넣어도 재생된다. <img> 로 불러온 SVG 는
@@ -21,15 +21,15 @@ INK, SUB, LINE = "#16202b", "#5a6b7b", "#d9dfe5"
 HOT, OFF, OK = "#d13212", "#c3cad2", "#1d8102"
 
 ROWS = [  # (key, 이름, 설명, 시간당, 어느 장면부터 꺼지나)
-    ("cp",   "EKS 컨트롤플레인", "클러스터를 지워야만 멈춥니다", 0.1000, 3),
-    ("alb",  "로드밸런서 (ALB)", "Ingress 를 지우면 멈춥니다",   0.0405, 3),
-    ("node", "노드 1대 + 퍼블릭 IP", "대수를 0으로 줄이면 멈춥니다", 0.0258, 2),
+    ("cp",   "EKS 컨트롤플레인", "클러스터를 통째로 지워야 멈춥니다", 0.1000, 3),
+    ("alb",  "로드밸런서 (ALB)", "Ingress를 지우면 같이 사라집니다", 0.0405, 3),
+    ("node", "노드 1대 + 퍼블릭 IP", "0대로 줄이면 바로 멈춥니다", 0.0258, 2),
 ]
 TOTAL = sum(r[3] for r in ROWS)                      # 0.1663
 SCENES = [
-    (1, "실습 중",            f"${TOTAL:.4f}",                       "전부 켜져 있습니다"),
-    (2, "노드를 0대로 줄임",   f"${TOTAL - ROWS[2][3]:.4f}",          f"요금의 {round((TOTAL - ROWS[2][3]) / TOTAL * 100)}%가 그대로 나갑니다"),
-    (3, "클러스터를 destroy", "$0",                                  "여기서야 멈춥니다"),
+    (1, "실습하는 중입니다",       f"${TOTAL:.4f}",                       "전부 켜 둔 상태입니다"),
+    (2, "노드를 0대로 줄였습니다", f"${TOTAL - ROWS[2][3]:.4f}",          f"노드를 껐는데 {round((TOTAL - ROWS[2][3]) / TOTAL * 100)}%가 그대로입니다"),
+    (3, "클러스터를 지웠습니다",   "$0",                                  "이제야 멈췄습니다"),
 ]
 BAR_X, BAR_MAX, ROW_Y0, ROW_H = 330, 420, 150, 96
 
@@ -38,7 +38,7 @@ def build(static=None):
     """static=None 이면 애니메이션, 1~3 이면 그 장면의 정지 화면."""
     o = []; e = o.append
     e(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
-      f'font-family="{F}" role="img" aria-label="노드를 0대로 줄여도 요금의 대부분이 그대로 나가고, 클러스터를 지워야 0이 된다">')
+      f'font-family="{F}" role="img" aria-label="노드를 0대로 줄여도 요금의 대부분이 그대로 나가고, 클러스터를 지워야 0이 됩니다">')
     css = []
     if static is None:
         # 12초 한 바퀴. 장면 1: 0~30% · 장면 2: 36~63% · 장면 3: 69~96% · 나머지는 전환
@@ -72,14 +72,14 @@ def build(static=None):
     e("<style>" + "".join(css) + "</style>")
     e(f'<rect width="{W}" height="{H}" rx="14" fill="#fff"/>')
     e(f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="14" fill="none" stroke="{LINE}"/>')
-    e(f'<text x="44" y="62" font-size="25" font-weight="700" fill="{INK}">무엇을 꺼야 요금이 멈추는가</text>')
-    e(f'<text x="44" y="92" font-size="14" fill="{SUB}">서울 리전 시간당 요금 · 노드 1대 기준 · 세 장면이 12초마다 반복됩니다</text>')
+    e(f'<text x="44" y="62" font-size="25" font-weight="700" fill="{INK}">노드를 꺼도 돈은 계속 나갑니다</text>')
+    e(f'<text x="44" y="92" font-size="14" fill="{SUB}">하나씩 꺼 보겠습니다. 서울 리전에서 노드 1대를 쓸 때 1시간마다 나가는 돈입니다</text>')
 
     # 장면 표시 (오른쪽 위). 지금 장면만 진하게 보인다
     for n, label, _, _ in SCENES:
         x = 720 + (n - 1) * 0
-        e(f'<g class="s{n}"><rect x="{W - 44 - 300}" y="38" width="300" height="40" rx="20" fill="{INK}"/>'
-          f'<text x="{W - 44 - 150}" y="64" font-size="15.5" font-weight="700" fill="#fff" text-anchor="middle">장면 {n} / 3 · {label}</text></g>')
+        e(f'<g class="s{n}"><rect x="{W - 44 - 330}" y="38" width="330" height="40" rx="20" fill="{INK}"/>'
+          f'<text x="{W - 44 - 165}" y="64" font-size="15.5" font-weight="700" fill="#fff" text-anchor="middle">{n} / 3 · {label}</text></g>')
 
     # 리소스 행
     for i, (key, name, how, rate, off_at) in enumerate(ROWS):
@@ -102,14 +102,14 @@ def build(static=None):
         col = OK if n == 3 else HOT
         e(f'<g class="s{n}"><text x="{px}" y="{ROW_Y0 + 86}" font-size="{50 if n == 3 else 34}" font-weight="800" '
           f'font-family="{M}" fill="{col}">{total}</text>'
-          f'<text x="{px}" y="{ROW_Y0 + 116}" font-size="13.5" fill="{SUB}">시간당</text>'
+          f'<text x="{px}" y="{ROW_Y0 + 116}" font-size="13.5" fill="{SUB}">1시간마다</text>'
           + "".join(f'<text x="{px}" y="{ROW_Y0 + 168 + k * 22}" font-size="14.5" font-weight="700" fill="{INK}">{ln}</text>'
                     for k, ln in enumerate(wrap(note, 11))) + "</g>")
 
     # 아래: 한 바퀴 진행 막대
     e(f'<rect x="44" y="{H - 62}" width="{W - 88}" height="4" rx="2" fill="#eef1f4"/>')
     e(f'<rect class="clock" x="44" y="{H - 62}" width="{W - 88}" height="4" rx="2" fill="{INK}"/>')
-    e(f'<text x="44" y="{H - 30}" font-size="12.5" fill="{SUB}">수치는 본문 단가표와 같습니다 · 작도는 AI 가 코드로 했습니다</text>')
+    e(f'<text x="44" y="{H - 30}" font-size="12.5" fill="{SUB}">숫자는 본문의 표와 같습니다. 그림은 AI가 코드로 그렸습니다</text>')
     e("</svg>")
     return "\n".join(o)
 
