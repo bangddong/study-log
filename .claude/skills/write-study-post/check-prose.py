@@ -157,7 +157,9 @@ def baseline(pattern):
 # ("확인합니다." 같은 안내문)은 튜토리얼에 꼭 필요하므로 문단 통계에서 뺀다.
 FLOW_BASE = {"spp": 3.9, "plen": 179, "short": 7.2, "conj": 14.0, "mean": 45.4}
 FLOW_TOL = {"spp": (3.0, None), "plen": (130, None), "short": (None, 12.0), "conj": (5.0, 18.0),
-            "mean": (38.0, 52.0), "top_end": (None, 14.0), "mark": (None, 3)}
+            "mean": (38.0, 52.0), "top_end": (None, 14.0), "mark": (None, 3),
+            # 참고 글: 표 0 · 상자 1 · 질문 9 · 그림 1.26/천자. 튜토리얼은 명령 확인용 표가 필요해 표를 0 으로 두지는 않는다
+            "tables": (None, 0.6), "boxes": (None, 4), "ask": (3, None), "figs": (0.3, None), "enum": (None, 0)}
 FLOW_CONJ = ("그런데", "그래서", "하지만", "따라서", "반면", "그리고", "다만", "물론", "즉", "또한", "그러나",
              "그러면", "반대로", "여기서", "이때", "예를 들어", "그다음", "마지막으로", "먼저", "다음으로",
              "대신", "그래도", "결국", "덕분에", "문제는", "참고로")
@@ -218,11 +220,22 @@ def flow_report(path):
         "top_end": ends.most_common(1)[0][1] / len(sents) * 100,
         "mark": len(re.findall("🔴|⚠️", raw)),
     }
+    # 구조: 문단 지표를 다 맞추고도 뼈대가 예전 그대로일 수 있다(2026-10-07, ①편 1차 재작성이 그랬다.
+    # 문단은 길어졌는데 표 6개·상자 6개가 설명을 대신하고 있었다). 참고 글은 표 0개, 질문 9번이다.
+    chars = sum(len(b) for b in body)
+    k = max(chars / 1000, 0.001)
+    nocode = re.sub(r"```[\s\S]*?```", "", raw)
+    v["tables"] = len(re.findall(r"^\|[-:| ]+\|\s*$", nocode, re.M)) / k
+    v["boxes"] = len(re.findall(r"(?:^|\n\n)> ", nocode))
+    v["ask"] = sum(b.count("?") for b in body)
+    v["figs"] = (nocode.count("![") + len(re.findall(r"```text", raw))) / k
+    v["enum"] = len(re.findall(r"첫째로|둘째로|셋째로|첫 번째로|두 번째로", nocode))
     lead = len(paras) - len(body)
     print(f"\n── {path}  [흐름]  문단 {len(body)}개 (+안내문 {lead}) · 문장 {len(sents)}")
     labels = [("spp", "문단당 문장 수", ""), ("plen", "문단 평균 길이", "자"), ("short", "20자 이하 문장", "%"),
               ("conj", "접속어로 시작", "%"), ("mean", "문장 평균", "자"), ("top_end", "최빈 종결어미", "%"),
-              ("mark", "경고 표시(🔴⚠️)", "개")]
+              ("mark", "경고 표시(🔴⚠️)", "개"), ("tables", "표 (산문 천 자당)", "개"), ("boxes", "인용 상자", "개"),
+              ("ask", "독자에게 던진 질문", "번"), ("figs", "그림 (천 자당)", "장"), ("enum", "첫째로·둘째로 나열", "번")]
     ok = True
     for key, label, unit in labels:
         lo, hi = FLOW_TOL[key]

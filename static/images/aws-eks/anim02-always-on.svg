@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" role="img" aria-label="일주일 동안 켜 두면 27.94달러, 쓸 때만 켜면 2.82달러가 나갑니다">
+<style>
+.ln{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 12s linear infinite}
+.end{opacity:0;animation:pop 12s linear infinite}
+@keyframes draw{0%{stroke-dashoffset:1}58%,94%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+@keyframes pop{0%,56%{opacity:0}62%,94%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.ln{animation:none;stroke-dashoffset:0}.end{animation:none;opacity:1}}</style>
+<rect width="1120" height="540" rx="14" fill="#fff"/>
+<rect x=".5" y=".5" width="1119" height="539" rx="14" fill="none" stroke="#d9dfe5"/>
+<text x="44" y="62" font-size="25" font-weight="700" fill="#16202b">켜 두기만 해도 열 배가 나갑니다</text>
+<text x="44" y="92" font-size="14" fill="#5a6b7b">하루 2시간씩 일주일 동안 실습한다고 해 보겠습니다. 노드 1대 기준이고 클러스터 요금만 셌습니다</text>
+<line x1="110" y1="440.0" x2="860" y2="440.0" stroke="#d9dfe5"/>
+<text x="96" y="445.0" font-size="13" fill="#5a6b7b" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">$0</text>
+<line x1="110" y1="340.0" x2="860" y2="340.0" stroke="#d9dfe5"/>
+<text x="96" y="345.0" font-size="13" fill="#5a6b7b" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">$10</text>
+<line x1="110" y1="240.0" x2="860" y2="240.0" stroke="#d9dfe5"/>
+<text x="96" y="245.0" font-size="13" fill="#5a6b7b" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">$20</text>
+<line x1="110" y1="140.0" x2="860" y2="140.0" stroke="#d9dfe5"/>
+<text x="96" y="145.0" font-size="13" fill="#5a6b7b" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">$30</text>
+<text x="163.6" y="468" font-size="13" fill="#5a6b7b" text-anchor="middle">1일째</text>
+<text x="270.7" y="468" font-size="13" fill="#5a6b7b" text-anchor="middle">2일째</text>
+<text x="377.9" y="468" font-size="13" fill="#5a6b7b" text-anchor="middle">3일째</text>
+<text x="485.0" y="468" font-size="13" fill="#5a6b7b" text-anchor="middle">4일째</text>
+<text x="592.1" y="468" font-size="13" fill="#5a6b7b" text-anchor="middle">5일째</text>
+<text x="699.3" y="468" font-size="13" fill="#5a6b7b" text-anchor="middle">6일째</text>
+<text x="806.4" y="468" font-size="13" fill="#5a6b7b" text-anchor="middle">7일째</text>
+<path d="M110.0,440.0 L860.0,160.6" class="ln" pathLength="1" fill="none" stroke="#d13212" stroke-width="4" stroke-linecap="round"/>
+<path d="M110.0,440.0 L199.3,440.0 L208.2,436.0 L306.4,436.0 L315.4,431.9 L413.6,431.9 L422.5,427.9 L520.7,427.9 L529.6,423.9 L627.9,423.9 L636.8,419.9 L735.0,419.9 L743.9,415.8 L842.1,415.8 L851.1,411.8 L860.0,411.8" class="ln" pathLength="1" fill="none" stroke="#1d8102" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="end"><circle cx="860" cy="160.6" r="6" fill="#d13212"/><text x="882" y="158.6" font-size="26" font-weight="800" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#d13212">$27.94</text><text x="882" y="182.6" font-size="14" font-weight="700" fill="#16202b">계속 켜 둔 경우</text><text x="882" y="202.6" font-size="13" fill="#5a6b7b">자는 동안에도 나갑니다</text></g>
+<g class="end"><circle cx="860" cy="411.8" r="6" fill="#1d8102"/><text x="882" y="367.8" font-size="26" font-weight="800" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#1d8102">$2.82</text><text x="882" y="391.8" font-size="14" font-weight="700" fill="#16202b">쓸 때만 켠 경우</text><text x="882" y="411.8" font-size="13" fill="#5a6b7b">매일 만들고 지웁니다</text></g>
+<text x="44" y="512" font-size="12.5" fill="#5a6b7b">숫자는 본문의 단가로 계산했습니다. 그림은 AI가 코드로 그렸습니다</text>
+</svg>
