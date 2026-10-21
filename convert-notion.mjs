@@ -55,11 +55,14 @@ async function run() {
     const series = props.Series?.select?.name || null;
     const emoji = extractText(props.Emoji?.rich_text) || page.icon?.emoji || '';
     const slug = extractText(props.Slug?.rich_text);
+    // 검색 결과·공유 카드에 쓰는 요약. 비어 있으면 gatsby-node 가 본문에서 뽑는다.
+    const description = extractText(props.Description?.rich_text).trim();
 
     const mdblocks = await n2m.pageToMarkdown(page.id);
     const mdString = n2m.toMarkdownString(mdblocks);
 
     const frontMatter = { title, date, tags, series, emoji };
+    if (description) frontMatter.description = description;
     const markdownBody = escapeDollars(typeof mdString === 'string' ? mdString : (mdString.parent ?? ''));
     const filename = (slug || title.replace(/\s+/g, '-').toLowerCase()) + '.md';
 
