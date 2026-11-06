@@ -98,7 +98,67 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: `slug`,
       value: slug,
     })
+
+    createNodeField({
+      node,
+      name: `description`,
+      value:
+        node.frontmatter.description ||
+        describe(node.rawMarkdownBody) ||
+        describe(node.rawMarkdownBody, { lists: true }) ||
+        node.frontmatter.title,
+    })
   }
+}
+
+// 검색 결과에 쓸 요약을 본문에서 뽑는다.
+// excerpt 는 맨 앞 출처 인용구("Antonio Gulli, ...를 정리합니다")부터 잘라서
+// 시리즈 글마다 같은 문장으로 시작했다. 출처·구분선·제목을 건너뛰고 첫 산문 문단부터 쓴다.
+const DESCRIPTION_MAX = 150
+const ATTRIBUTION = /^이 글은 [^.]*(참고|정리|바탕)[^.]*\.\s*/
+
+const AFFILIATE = /이 링크를 통해 구매하시면/
+
+// lists: 산문 문단이 하나도 없는 글(목록·코드 위주인 강의 노트)에서만 목록 항목까지 쓴다.
+function describe(markdown = "", { lists = false } = {}) {
+  const skip = lists ? /^(>|#|\||!\[|<|---)/ : /^(>|#|\||!\[|<|---|[-*+] |\d+\. )/
+  const blocks = markdown
+    .replace(/```[\s\S]*?```/g, "\n\n")
+    .split(/\n\s*\n/)
+    .map(b => b.trim())
+    .filter(Boolean)
+
+  const prose = []
+  for (const block of blocks) {
+    if (skip.test(block)) continue
+    if (AFFILIATE.test(block) || /^https?:\/\/\S+$/.test(block)) continue
+    // 이탤릭으로만 된 출처 문단 (_이 글은_ [_원서_](...)...)
+    if (/^[_*]이 글은/.test(block)) continue
+    prose.push(block)
+    if (prose.join(" ").length > DESCRIPTION_MAX * 2) break
+  }
+
+  const text = prose
+    .join(" ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/^\s*(?:[-*+]|\d+\.)\s+/gm, "")
+    // 인라인 코드 안의 밑줄(cache_read_input_tokens)은 강조 표시가 아니므로 남긴다.
+    // split 결과의 홀수 번째 조각이 백틱 안쪽이다.
+    .split("`")
+    .map((part, i) => (i % 2 ? part : part.replace(/[*_]/g, "")))
+    .join("")
+    .replace(/\\\$/g, "$")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(ATTRIBUTION, "")
+
+  if (text.length <= DESCRIPTION_MAX) return text
+  const cut = text.slice(0, DESCRIPTION_MAX)
+  // 문장 끝에서 자를 수 있으면 거기서, 아니면 단어 경계에서 자르고 말줄임표를 붙인다.
+  const end = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("? "))
+  if (end >= DESCRIPTION_MAX * 0.5) return cut.slice(0, end + 1)
+  return cut.slice(0, cut.lastIndexOf(" ")) + "…"
 }
 
 exports.createSchemaCustomization = ({ actions }) => {

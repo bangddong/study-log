@@ -7,7 +7,9 @@
 const React = require("react")
 const { adsense } = require("./blog-config")
 
-exports.onRenderBody = ({ setHeadComponents }) => {
+exports.onRenderBody = ({ setHeadComponents, setHtmlAttributes }) => {
+  setHtmlAttributes({ lang: "ko" })
+
   if (adsense && adsense.client) {
     setHeadComponents([
       React.createElement("script", {

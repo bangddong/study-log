@@ -11,9 +11,9 @@ const Post = ({ data }) => {
   const post = data.markdownRemark
   const { previous, next, seriesList } = data
 
-  const { title, date, update, tags, series, emoji } = post.frontmatter
-  const { excerpt } = post
-  const { readingTime, slug } = post.fields
+  const { title, date, update, tags, series, emoji, isoDate, isoUpdate } =
+    post.frontmatter
+  const { readingTime, slug, description } = post.fields
 
   let filteredSeries = []
   if (series !== null) {
@@ -34,7 +34,17 @@ const Post = ({ data }) => {
 
   return (
     <Layout>
-      <SEO title={title} description={excerpt} url={`${siteUrl}${slug}`} />
+      <SEO
+        title={title}
+        description={description}
+        url={`${siteUrl}${slug}`}
+        article={{
+          datePublished: isoDate,
+          dateModified: isoUpdate,
+          tags,
+          series,
+        }}
+      />
       <Article>
         <Article.Header
           emoji={emoji}
@@ -70,18 +80,20 @@ export const pageQuery = graphql`
     }
     markdownRemark(id: { eq: $id }) {
       id
-      excerpt(pruneLength: 200, truncate: true)
       html
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
         update(formatString: "MMMM DD, YYYY")
+        isoDate: date(formatString: "YYYY-MM-DD")
+        isoUpdate: update(formatString: "YYYY-MM-DD")
         tags
         series
         emoji
       }
       fields {
         slug
+        description
         readingTime {
           minutes
         }
