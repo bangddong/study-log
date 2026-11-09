@@ -119,7 +119,7 @@ writing-style.md의 구조를 따른다. 뼈대:
 
 ```json
 {
-  "Title": "...", "Emoji": "🧩",
+  "Title": "...",
   "Slug": "study/...", "Series": "시리즈명(단독글이면 생략)",
   "배포상태": "작성중",
   "date:Date:start": "YYYY-MM-DD", "date:Date:is_datetime": 0,
@@ -127,6 +127,8 @@ writing-style.md의 구조를 따른다. 뼈대:
 }
 ```
 
+- 🔴 **제목에 이모지를 넣지 않는다** (2026-11-09). `Emoji` 속성을 넣지 말고 페이지 아이콘(`icon`)도 지정하지 않는다.
+  변환기는 속성이 비면 페이지 아이콘을 대신 가져간다(`convert-notion.mjs:56`).
 - **Tags** 허용값: Spring/JPA/Querydsl/Transaction/AI/Claude Code/Troubleshooting/AWS/EKS.
   예전에는 create 에서 multi_select 가 실패해 생성 직후 `notion-update-page` 로 따로 넣었다.
   2026-10-06 에는 `"Tags": ["AWS", "EKS"]` **배열**로 create 에 넣어 성공했다. 실패하면 예전 방식으로 돌아간다.

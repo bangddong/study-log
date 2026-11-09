@@ -28,7 +28,7 @@ https://dhbang.co.kr
 | 필드 | 타입 | 설명 |
 |------|------|------|
 | Title | title | 글 제목 |
-| Emoji | text | 대표 이모지 (예: 🧰) |
+| Emoji | text | **쓰지 않는다** (2026-11-09). 비워 두면 제목 앞 이모지가 렌더링되지 않는다. 페이지 아이콘도 비운다. 변환기가 속성이 비면 아이콘을 대신 가져간다. |
 | Date | date | 최초 작성일 |
 | Last Updated | date | 마지막 수정일 |
 | Slug | text | **파일 경로** — 카테고리 포함 필수 (예: `study/ai-agent-harness`) |
@@ -96,7 +96,6 @@ Slug: trouble/post-name
 ```json
 {
   "Title": "글 제목",
-  "Emoji": "🗄️",
   "Slug": "study/example-slug",
   "배포상태": "작성완료",
   "date:Date:start": "2026-04-27",
