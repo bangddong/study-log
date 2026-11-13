@@ -1,0 +1,114 @@
+# -*- coding: utf-8 -*-
+"""AWS EKS 실습기 ⑧편 Anim.6.
+
+Anim.6  비밀값은 다섯 칸을 지나 앱에 닿습니다  (⑧편. 서비스 계정 토큰 → 역할 → Secrets Manager → Secret → 환경변수)
+
+움직이는 방식과 제약은 anim01-cost-states.py 의 머리말과 같다.
+
+실행:
+  python3 scripts/figures/aws-eks/anim06-08.py             # 본편
+  python3 scripts/figures/aws-eks/anim06-08.py --frames D  # 다 그려진 상태의 정지 PNG
+
+그림의 사실은 2026-11-17 EKS 1.36 클러스터에서 잰 것이다.
+마지막 칸(환경변수는 시작할 때 한 번만 읽는다)은 Secret 값을 바꾼 뒤 앱 안의 값이
+rollout restart 전까지 그대로였던 실측에 근거한다.
+"""
+import io, subprocess, sys
+
+W = 1120
+F = "-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif"
+M = "ui-monospace,SFMono-Regular,Menlo,monospace"
+INK, SUB, LINE, HOT, OK = "#16202b", "#5a6b7b", "#d9dfe5", "#d13212", "#1d8102"
+
+
+def head(h, label, title, sub, css, static):
+    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {h}" width="{W}" height="{h}" '
+         f'font-family="{F}" role="img" aria-label="{label}">']
+    o.append("<style>" + ("" if static else css) + "</style>")
+    o.append(f'<rect width="{W}" height="{h}" rx="14" fill="#fff"/>')
+    o.append(f'<rect x=".5" y=".5" width="{W - 1}" height="{h - 1}" rx="14" fill="none" stroke="{LINE}"/>')
+    o.append(f'<text x="44" y="62" font-size="25" font-weight="700" fill="{INK}">{title}</text>')
+    o.append(f'<text x="44" y="92" font-size="14" fill="{SUB}">{sub}</text>')
+    return o
+
+
+def foot(o, h, note):
+    o.append(f'<text x="44" y="{h - 28}" font-size="12.5" fill="{SUB}">{note}</text>')
+    o.append("</svg>")
+    return "\n".join(o)
+
+
+def wrap(text, width):
+    words, line, lines = text.split(" "), "", []
+    for w_ in words:
+        if line and len(line) + 1 + len(w_) > width:
+            lines.append(line)
+            line = w_
+        else:
+            line = (line + " " + w_).strip()
+    lines.append(line)
+    return lines
+
+
+def chain(steps, label, title, sub, bottom, static, period=15):
+    """상자가 왼쪽부터 하나씩 켜지는 사슬. steps = [(큰 글씨, 작은 글씨, 색)]"""
+    H = 420
+    n = len(steps)
+    step = 80 // n
+    css = "".join(
+        f".s{i}{{opacity:0;animation:st{i} {period}s ease-out infinite}}"
+        f"@keyframes st{i}{{0%,{4 + i * step}%{{opacity:0}}{9 + i * step}%,94%{{opacity:1}}100%{{opacity:0}}}}"
+        for i in range(n)
+    ) + "@media (prefers-reduced-motion:reduce){" + "".join(f".s{i}{{animation:none;opacity:1}}" for i in range(n)) + "}"
+    o = head(H, label, title, sub, css, static)
+    gap, y, bh = 26, 140, 160
+    bw = (W - 88 - gap * (n - 1)) / n
+    x = 44
+    for i, (big, small, col) in enumerate(steps):
+        cls = "" if static else f' class="s{i}"'
+        fill = "#fff5f3" if col == HOT else "#fafbfc"
+        o.append(f'<g{cls}>')
+        if i:
+            ax = x - gap
+            o.append(f'<path d="M{ax + 4:.1f},{y + bh / 2} L{ax + gap - 9:.1f},{y + bh / 2}" stroke="{SUB}" stroke-width="2.5"/>'
+                     f'<path d="M{ax + gap - 9:.1f},{y + bh / 2 - 6} L{ax + gap - 1:.1f},{y + bh / 2} L{ax + gap - 9:.1f},{y + bh / 2 + 6} z" fill="{SUB}"/>')
+        o.append(f'<rect x="{x:.1f}" y="{y}" width="{bw:.1f}" height="{bh}" rx="12" fill="{fill}" stroke="{col}" stroke-width="2"/>'
+                 f'<text x="{x + 16:.1f}" y="{y + 32}" font-size="13" font-weight="700" fill="{col}">{i + 1}</text>'
+                 f'<text x="{x + 16:.1f}" y="{y + 64}" font-size="16.5" font-weight="700" fill="{INK}">{big}</text>')
+        for k, ln in enumerate(wrap(small, 14)):
+            o.append(f'<text x="{x + 16:.1f}" y="{y + 92 + k * 19}" font-size="13" fill="{SUB}">{ln}</text>')
+        o.append("</g>")
+        x += bw + gap
+    o.append(f'<text x="44" y="{y + bh + 46}" font-size="14.5" fill="{INK}">{bottom}</text>')
+    return foot(o, H, "그림은 AI가 코드로 그렸습니다")
+
+
+def anim6(static=False):
+    steps = [
+        ("토큰을 받습니다", "EKS가 ESO 파드에 서비스 계정 토큰을 넣습니다", INK),
+        ("역할을 빌립니다", "STS가 토큰의 sub 를 보고 eks-lab-eso 를 빌려줍니다", INK),
+        ("값을 읽습니다", "빌린 역할은 eks-lab/app 하나만 읽을 수 있습니다", INK),
+        ("Secret을 씁니다", "ESO가 app-env 를 만들고 한 시간마다 맞춥니다", OK),
+        ("환경변수가 됩니다", "앱은 시작할 때 한 번만 읽습니다", HOT),
+    ]
+    return chain(steps,
+                 "ESO 파드의 토큰이 STS를 거쳐 역할이 되고, 그 역할로 읽은 값이 Secret을 지나 앱이 시작할 때 환경변수가 됩니다",
+                 "비밀값은 다섯 칸을 지나 앱에 닿습니다",
+                 "액세스 키는 어디에도 없습니다. 파드가 받은 토큰이 로그인을 대신합니다",
+                 "넷째 칸까지는 값이 바뀌면 따라옵니다. 다섯째 칸은 앱을 재시작해야 새 값을 읽습니다.",
+                 static)
+
+
+if __name__ == "__main__":
+    base = "static/images/aws-eks/"
+    jobs = (("anim06-secret-path", anim6),)
+    if "--frames" in sys.argv:
+        out = sys.argv[sys.argv.index("--frames") + 1]
+        for name, fn in jobs:
+            p = f"{out}/{name}.svg"
+            io.open(p, "w", encoding="utf-8").write(fn(static=True))
+            subprocess.run(["rsvg-convert", "-w", str(W), p, "-o", p.replace(".svg", ".png")], check=True)
+    else:
+        for name, fn in jobs:
+            io.open(base + name + ".svg", "w", encoding="utf-8").write(fn())
+    print("done")
