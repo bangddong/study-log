@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""AWS EKS 실습기 ⑧편 Anim.6.
+"""AWS EKS 실습기 ⑧편 Anim.6 · ⑨편 Anim.7.
 
 Anim.6  비밀값은 다섯 칸을 지나 앱에 닿습니다  (⑧편. 서비스 계정 토큰 → 역할 → Secrets Manager → Secret → 환경변수)
+Anim.7  디스크는 파드가 자리를 잡은 뒤에 생깁니다  (⑨편. PVC → 스케줄 → 디스크 생성 → Bound → 파드 교체)
 
 움직이는 방식과 제약은 anim01-cost-states.py 의 머리말과 같다.
 
@@ -10,6 +11,8 @@ Anim.6  비밀값은 다섯 칸을 지나 앱에 닿습니다  (⑧편. 서비�
   python3 scripts/figures/aws-eks/anim06-08.py --frames D  # 다 그려진 상태의 정지 PNG
 
 그림의 사실은 2026-11-17 EKS 1.36 클러스터에서 잰 것이다.
+Anim.7 의 순서는 PVC 이벤트 네 줄(WaitForFirstConsumer → Provisioning → ExternalProvisioning → ProvisioningSucceeded)과
+db-0 을 지운 뒤 UID 만 바뀌고 volumeName 은 같았던 실측에 근거한다.
 마지막 칸(환경변수는 시작할 때 한 번만 읽는다)은 Secret 값을 바꾼 뒤 앱 안의 값이
 rollout restart 전까지 그대로였던 실측에 근거한다.
 """
@@ -99,9 +102,25 @@ def anim6(static=False):
                  static)
 
 
+def anim7(static=False):
+    steps = [
+        ("PVC를 냅니다", "1GiB를 요청하고 Pending 으로 기다립니다", INK),
+        ("파드가 자리를 잡습니다", "노드가 정해지면 AZ 도 정해집니다", INK),
+        ("디스크를 만듭니다", "드라이버가 그 AZ 에 gp3 디스크를 만듭니다", INK),
+        ("노드에 붙입니다", "PVC 는 Bound, 디스크는 in-use 가 됩니다", OK),
+        ("파드가 바뀌어도", "새 db-0 이 같은 PVC 와 같은 디스크를 받습니다", OK),
+    ]
+    return chain(steps,
+                 "PVC가 기다리다가 파드가 노드를 고른 뒤에 그 AZ에 디스크가 생기고, 파드가 바뀌어도 같은 디스크가 붙습니다",
+                 "디스크는 파드가 자리를 잡은 뒤에 생깁니다",
+                 "StorageClass 의 WaitForFirstConsumer 가 둘째 칸과 셋째 칸의 순서를 정합니다",
+                 "디스크를 먼저 만들면 노드와 다른 AZ 에 생길 수 있습니다. EBS 디스크는 다른 AZ 의 노드에 붙지 않습니다.",
+                 static)
+
+
 if __name__ == "__main__":
     base = "static/images/aws-eks/"
-    jobs = (("anim06-secret-path", anim6),)
+    jobs = (("anim06-secret-path", anim6), ("anim07-pvc-binding", anim7))
     if "--frames" in sys.argv:
         out = sys.argv[sys.argv.index("--frames") + 1]
         for name, fn in jobs:
