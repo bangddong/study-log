@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""AWS EKS 실습기 ⑧편 Anim.6 · ⑨편 Anim.7.
+"""AWS EKS 실습기 ⑧편 Anim.6 · ⑨편 Anim.7 · ⑩편 Anim.8.
 
 Anim.6  비밀값은 다섯 칸을 지나 앱에 닿습니다  (⑧편. 서비스 계정 토큰 → 역할 → Secrets Manager → Secret → 환경변수)
 Anim.7  디스크는 파드가 자리를 잡은 뒤에 생깁니다  (⑨편. PVC → 스케줄 → 디스크 생성 → Bound → 파드 교체)
+Anim.8  클러스터만 부서지고 디스크는 남습니다      (⑩편. 디스크 → 클러스터 → 값 심기 → destroy → 다시 세워 붙이기)
 
 움직이는 방식과 제약은 anim01-cost-states.py 의 머리말과 같다.
 
@@ -13,6 +14,7 @@ Anim.7  디스크는 파드가 자리를 잡은 뒤에 생깁니다  (⑨편. PV
 그림의 사실은 2026-11-17 EKS 1.36 클러스터에서 잰 것이다.
 Anim.7 의 순서는 PVC 이벤트 네 줄(WaitForFirstConsumer → Provisioning → ExternalProvisioning → ProvisioningSucceeded)과
 db-0 을 지운 뒤 UID 만 바뀌고 volumeName 은 같았던 실측에 근거한다.
+Anim.8 의 값 9283ed75 는 2026-11-17 왕복에서 실제로 심고 다시 찾은 값이다.
 마지막 칸(환경변수는 시작할 때 한 번만 읽는다)은 Secret 값을 바꾼 뒤 앱 안의 값이
 rollout restart 전까지 그대로였던 실측에 근거한다.
 """
@@ -118,9 +120,25 @@ def anim7(static=False):
                  static)
 
 
+def anim8(static=False):
+    steps = [
+        ("디스크를 만듭니다", "0-bootstrap 이 ap-northeast-2a 에 1GiB 를 만듭니다", INK),
+        ("클러스터를 세웁니다", "노드도 같은 AZ 에 뜨고 PV 가 디스크를 소개합니다", INK),
+        ("값을 심습니다", "memo 표에 9283ed75 한 줄을 넣습니다", INK),
+        ("클러스터를 부숩니다", "19개가 사라지고 디스크는 available 로 남습니다", HOT),
+        ("다시 세워 붙입니다", "초기화를 건너뛰고 9283ed75 가 돌아옵니다", OK),
+    ]
+    return chain(steps,
+                 "디스크는 0-bootstrap에 남고 클러스터만 부서졌다가 다시 세워지며, 같은 디스크가 다시 붙어 심어 둔 값이 돌아옵니다",
+                 "클러스터만 부서지고 디스크는 남습니다",
+                 "넷째 칸에서 tofu destroy 가 지우는 것은 2-cluster 의 state 에 적힌 것뿐입니다",
+                 "디스크가 남아도 비밀번호가 바뀌면 앱은 붙지 못합니다. 그래서 비밀번호도 디스크와 같은 층에 둡니다.",
+                 static)
+
+
 if __name__ == "__main__":
     base = "static/images/aws-eks/"
-    jobs = (("anim06-secret-path", anim6), ("anim07-pvc-binding", anim7))
+    jobs = (("anim06-secret-path", anim6), ("anim07-pvc-binding", anim7), ("anim08-rebuild", anim8))
     if "--frames" in sys.argv:
         out = sys.argv[sys.argv.index("--frames") + 1]
         for name, fn in jobs:
