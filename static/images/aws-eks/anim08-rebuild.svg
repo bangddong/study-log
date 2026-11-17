@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" role="img" aria-label="디스크는 0-bootstrap에 남고 클러스터만 부서졌다가 다시 세워지며, 같은 디스크가 다시 붙어 심어 둔 값이 돌아옵니다">
+<style>.s0{opacity:0;animation:st0 15s ease-out infinite}@keyframes st0{0%,4%{opacity:0}9%,94%{opacity:1}100%{opacity:0}}.s1{opacity:0;animation:st1 15s ease-out infinite}@keyframes st1{0%,20%{opacity:0}25%,94%{opacity:1}100%{opacity:0}}.s2{opacity:0;animation:st2 15s ease-out infinite}@keyframes st2{0%,36%{opacity:0}41%,94%{opacity:1}100%{opacity:0}}.s3{opacity:0;animation:st3 15s ease-out infinite}@keyframes st3{0%,52%{opacity:0}57%,94%{opacity:1}100%{opacity:0}}.s4{opacity:0;animation:st4 15s ease-out infinite}@keyframes st4{0%,68%{opacity:0}73%,94%{opacity:1}100%{opacity:0}}@media (prefers-reduced-motion:reduce){.s0{animation:none;opacity:1}.s1{animation:none;opacity:1}.s2{animation:none;opacity:1}.s3{animation:none;opacity:1}.s4{animation:none;opacity:1}}</style>
+<rect width="1120" height="420" rx="14" fill="#fff"/>
+<rect x=".5" y=".5" width="1119" height="419" rx="14" fill="none" stroke="#d9dfe5"/>
+<text x="44" y="62" font-size="25" font-weight="700" fill="#16202b">클러스터만 부서지고 디스크는 남습니다</text>
+<text x="44" y="92" font-size="14" fill="#5a6b7b">넷째 칸에서 tofu destroy 가 지우는 것은 2-cluster 의 state 에 적힌 것뿐입니다</text>
+<g class="s0">
+<rect x="44.0" y="140" width="185.6" height="160" rx="12" fill="#fafbfc" stroke="#16202b" stroke-width="2"/><text x="60.0" y="172" font-size="13" font-weight="700" fill="#16202b">1</text><text x="60.0" y="204" font-size="16.5" font-weight="700" fill="#16202b">디스크를 만듭니다</text>
+<text x="60.0" y="232" font-size="13" fill="#5a6b7b">0-bootstrap 이</text>
+<text x="60.0" y="251" font-size="13" fill="#5a6b7b">ap-northeast-2a</text>
+<text x="60.0" y="270" font-size="13" fill="#5a6b7b">에 1GiB 를 만듭니다</text>
+</g>
+<g class="s1">
+<path d="M233.6,220.0 L246.6,220.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M246.6,214.0 L254.6,220.0 L246.6,226.0 z" fill="#5a6b7b"/>
+<rect x="255.6" y="140" width="185.6" height="160" rx="12" fill="#fafbfc" stroke="#16202b" stroke-width="2"/><text x="271.6" y="172" font-size="13" font-weight="700" fill="#16202b">2</text><text x="271.6" y="204" font-size="16.5" font-weight="700" fill="#16202b">클러스터를 세웁니다</text>
+<text x="271.6" y="232" font-size="13" fill="#5a6b7b">노드도 같은 AZ 에 뜨고</text>
+<text x="271.6" y="251" font-size="13" fill="#5a6b7b">PV 가 디스크를</text>
+<text x="271.6" y="270" font-size="13" fill="#5a6b7b">소개합니다</text>
+</g>
+<g class="s2">
+<path d="M445.2,220.0 L458.2,220.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M458.2,214.0 L466.2,220.0 L458.2,226.0 z" fill="#5a6b7b"/>
+<rect x="467.2" y="140" width="185.6" height="160" rx="12" fill="#fafbfc" stroke="#16202b" stroke-width="2"/><text x="483.2" y="172" font-size="13" font-weight="700" fill="#16202b">3</text><text x="483.2" y="204" font-size="16.5" font-weight="700" fill="#16202b">값을 심습니다</text>
+<text x="483.2" y="232" font-size="13" fill="#5a6b7b">memo 표에</text>
+<text x="483.2" y="251" font-size="13" fill="#5a6b7b">9283ed75 한 줄을</text>
+<text x="483.2" y="270" font-size="13" fill="#5a6b7b">넣습니다</text>
+</g>
+<g class="s3">
+<path d="M656.8,220.0 L669.8,220.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M669.8,214.0 L677.8,220.0 L669.8,226.0 z" fill="#5a6b7b"/>
+<rect x="678.8" y="140" width="185.6" height="160" rx="12" fill="#fff5f3" stroke="#d13212" stroke-width="2"/><text x="694.8" y="172" font-size="13" font-weight="700" fill="#d13212">4</text><text x="694.8" y="204" font-size="16.5" font-weight="700" fill="#16202b">클러스터를 부숩니다</text>
+<text x="694.8" y="232" font-size="13" fill="#5a6b7b">19개가 사라지고 디스크는</text>
+<text x="694.8" y="251" font-size="13" fill="#5a6b7b">available 로</text>
+<text x="694.8" y="270" font-size="13" fill="#5a6b7b">남습니다</text>
+</g>
+<g class="s4">
+<path d="M868.4,220.0 L881.4,220.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M881.4,214.0 L889.4,220.0 L881.4,226.0 z" fill="#5a6b7b"/>
+<rect x="890.4" y="140" width="185.6" height="160" rx="12" fill="#fafbfc" stroke="#1d8102" stroke-width="2"/><text x="906.4" y="172" font-size="13" font-weight="700" fill="#1d8102">5</text><text x="906.4" y="204" font-size="16.5" font-weight="700" fill="#16202b">다시 세워 붙입니다</text>
+<text x="906.4" y="232" font-size="13" fill="#5a6b7b">초기화를 건너뛰고</text>
+<text x="906.4" y="251" font-size="13" fill="#5a6b7b">9283ed75 가</text>
+<text x="906.4" y="270" font-size="13" fill="#5a6b7b">돌아옵니다</text>
+</g>
+<text x="44" y="346" font-size="14.5" fill="#16202b">디스크가 남아도 비밀번호가 바뀌면 앱은 붙지 못합니다. 그래서 비밀번호도 디스크와 같은 층에 둡니다.</text>
+<text x="44" y="392" font-size="12.5" fill="#5a6b7b">그림은 AI가 코드로 그렸습니다</text>
+</svg>
