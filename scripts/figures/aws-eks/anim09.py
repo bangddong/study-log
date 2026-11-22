@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""AWS EKS 실습기 ⑪편 Anim.9.
+"""AWS EKS 실습기 ⑪편 Anim.9 · ⑫편 Anim.10.
 
 Anim.9   주문서가 로드밸런서가 되기까지      (⑪편. Ingress → 컨트롤러 → ALB → 파드 IP 타겟 → 443 인증서)
+Anim.10  replicas 한 칸을 둘이 고쳐 씁니다   (⑫편. HPA 가 늘림 → ArgoCD 가 git 대로 되돌림 → 반복 → 재시도 간격 → 칸을 뺌)
 
 상자 사슬은 anim06-08.py 의 chain() 을 그대로 쓴다. 움직이는 방식과 제약은 anim01-cost-states.py 의 머리말과 같다.
 
@@ -11,6 +12,8 @@ Anim.9   주문서가 로드밸런서가 되기까지      (⑪편. Ingress → 
 
 그림의 사실은 제 원본 서비스의 2026-09-11(ALB), 2026-09-16(HTTPS), 2026-10-16(재현) 일지에 근거한다.
 ADDRESS 가 20초 만에 채워지고, 타겟이 파드 IP 로 등록되고, HTTP 가 301 로 돌아간 것이 그날의 실측이다.
+Anim.10 은 2026-10-13 ArgoCD 세션의 실측이다. 3분 동안 둘째 파드가 4번 새로 만들어졌고,
+재시도 간격이 41초에서 2분 41초로 늘었으며, git 에서 /spec/replicas 를 빼자 되돌림이 멈췄다.
 """
 import importlib.util, io, os, subprocess, sys
 
@@ -37,9 +40,25 @@ def anim9(static=False):
                  static)
 
 
+def anim10(static=False):
+    steps = [
+        ("HPA가 2로 올립니다", "최소 파드 수를 2로 바꾼 커밋이 반영됐습니다", INK),
+        ("ArgoCD가 되돌립니다", "git 에 적힌 replicas: 1 로 맞춥니다", HOT),
+        ("다시 2, 다시 1", "3분 동안 둘째 파드가 4번 새로 만들어졌습니다", HOT),
+        ("간격만 늘어납니다", "재시도 간격이 41초에서 2분 41초가 됩니다", INK),
+        ("칸을 빼면 멈춥니다", "git 에서 replicas 를 지우자 되돌림이 사라졌습니다", OK),
+    ]
+    return chain(steps,
+                 "HPA가 파드 수를 2로 올리면 ArgoCD가 git에 적힌 1로 되돌리고, 이것이 반복되다가 git에서 replicas 칸을 빼자 멈춥니다",
+                 "replicas 한 칸을 둘이 고쳐 씁니다",
+                 "HPA 는 지표를, ArgoCD 는 git 을 정답으로 봅니다. 둘 다 자기 일을 제대로 하고 있습니다",
+                 "넷째 칸에서 멈춘 것처럼 보여도 끝난 것이 아닙니다. 한 칸의 주인을 하나로 정해야 끝납니다.",
+                 static)
+
+
 if __name__ == "__main__":
     base = "static/images/aws-eks/"
-    jobs = (("anim09-ingress", anim9),)
+    jobs = (("anim09-ingress", anim9), ("anim10-replicas-fight", anim10))
     if "--frames" in sys.argv:
         out = sys.argv[sys.argv.index("--frames") + 1]
         for name, fn in jobs:
