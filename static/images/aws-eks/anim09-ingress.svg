@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system,'Apple SD Gothic Neo','Pretendard','Noto Sans KR',system-ui,sans-serif" role="img" aria-label="Ingress를 적용하면 컨트롤러가 그것을 읽고 ALB를 세운 뒤 파드 IP를 타겟으로 등록하며, 443 리스너가 인증서를 냅니다">
+<style>.s0{opacity:0;animation:st0 15s ease-out infinite}@keyframes st0{0%,4%{opacity:0}9%,94%{opacity:1}100%{opacity:0}}.s1{opacity:0;animation:st1 15s ease-out infinite}@keyframes st1{0%,20%{opacity:0}25%,94%{opacity:1}100%{opacity:0}}.s2{opacity:0;animation:st2 15s ease-out infinite}@keyframes st2{0%,36%{opacity:0}41%,94%{opacity:1}100%{opacity:0}}.s3{opacity:0;animation:st3 15s ease-out infinite}@keyframes st3{0%,52%{opacity:0}57%,94%{opacity:1}100%{opacity:0}}.s4{opacity:0;animation:st4 15s ease-out infinite}@keyframes st4{0%,68%{opacity:0}73%,94%{opacity:1}100%{opacity:0}}@media (prefers-reduced-motion:reduce){.s0{animation:none;opacity:1}.s1{animation:none;opacity:1}.s2{animation:none;opacity:1}.s3{animation:none;opacity:1}.s4{animation:none;opacity:1}}</style>
+<rect width="1120" height="420" rx="14" fill="#fff"/>
+<rect x=".5" y=".5" width="1119" height="419" rx="14" fill="none" stroke="#d9dfe5"/>
+<text x="44" y="62" font-size="25" font-weight="700" fill="#16202b">주문서가 로드밸런서가 되기까지</text>
+<text x="44" y="92" font-size="14" fill="#5a6b7b">첫째 칸만 사람이 하고, 나머지 네 칸은 컨트롤러가 합니다</text>
+<g class="s0">
+<rect x="44.0" y="140" width="185.6" height="160" rx="12" fill="#fafbfc" stroke="#16202b" stroke-width="2"/><text x="60.0" y="172" font-size="13" font-weight="700" fill="#16202b">1</text><text x="60.0" y="204" font-size="16.5" font-weight="700" fill="#16202b">Ingress를 냅니다</text>
+<text x="60.0" y="232" font-size="13" fill="#5a6b7b">주문서만 생깁니다. 아직</text>
+<text x="60.0" y="251" font-size="13" fill="#5a6b7b">아무 일도 없습니다</text>
+</g>
+<g class="s1">
+<path d="M233.6,220.0 L246.6,220.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M246.6,214.0 L254.6,220.0 L246.6,226.0 z" fill="#5a6b7b"/>
+<rect x="255.6" y="140" width="185.6" height="160" rx="12" fill="#fafbfc" stroke="#16202b" stroke-width="2"/><text x="271.6" y="172" font-size="13" font-weight="700" fill="#16202b">2</text><text x="271.6" y="204" font-size="16.5" font-weight="700" fill="#16202b">컨트롤러가 읽습니다</text>
+<text x="271.6" y="232" font-size="13" fill="#5a6b7b">빌린 역할로 AWS API</text>
+<text x="271.6" y="251" font-size="13" fill="#5a6b7b">를 부릅니다</text>
+</g>
+<g class="s2">
+<path d="M445.2,220.0 L458.2,220.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M458.2,214.0 L466.2,220.0 L458.2,226.0 z" fill="#5a6b7b"/>
+<rect x="467.2" y="140" width="185.6" height="160" rx="12" fill="#fafbfc" stroke="#16202b" stroke-width="2"/><text x="483.2" y="172" font-size="13" font-weight="700" fill="#16202b">3</text><text x="483.2" y="204" font-size="16.5" font-weight="700" fill="#16202b">ALB를 세웁니다</text>
+<text x="483.2" y="232" font-size="13" fill="#5a6b7b">elb 태그가 붙은 두</text>
+<text x="483.2" y="251" font-size="13" fill="#5a6b7b">서브넷에 섭니다</text>
+</g>
+<g class="s3">
+<path d="M656.8,220.0 L669.8,220.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M669.8,214.0 L677.8,220.0 L669.8,226.0 z" fill="#5a6b7b"/>
+<rect x="678.8" y="140" width="185.6" height="160" rx="12" fill="#fafbfc" stroke="#1d8102" stroke-width="2"/><text x="694.8" y="172" font-size="13" font-weight="700" fill="#1d8102">4</text><text x="694.8" y="204" font-size="16.5" font-weight="700" fill="#16202b">파드 IP를 등록합니다</text>
+<text x="694.8" y="232" font-size="13" fill="#5a6b7b">노드를 건너뛰고 파드로</text>
+<text x="694.8" y="251" font-size="13" fill="#5a6b7b">바로 보냅니다</text>
+</g>
+<g class="s4">
+<path d="M868.4,220.0 L881.4,220.0" stroke="#5a6b7b" stroke-width="2.5"/><path d="M881.4,214.0 L889.4,220.0 L881.4,226.0 z" fill="#5a6b7b"/>
+<rect x="890.4" y="140" width="185.6" height="160" rx="12" fill="#fafbfc" stroke="#1d8102" stroke-width="2"/><text x="906.4" y="172" font-size="13" font-weight="700" fill="#1d8102">5</text><text x="906.4" y="204" font-size="16.5" font-weight="700" fill="#16202b">HTTPS로 받습니다</text>
+<text x="906.4" y="232" font-size="13" fill="#5a6b7b">443 에서 인증서를 내고</text>
+<text x="906.4" y="251" font-size="13" fill="#5a6b7b">80 은 301 로</text>
+<text x="906.4" y="270" font-size="13" fill="#5a6b7b">돌려보냅니다</text>
+</g>
+<text x="44" y="346" font-size="14.5" fill="#16202b">kubectl apply 가 성공해도 ALB 가 생긴 것은 아닙니다. 둘째 칸부터의 실패는 describe ingress 에서 찾습니다.</text>
+<text x="44" y="392" font-size="12.5" fill="#5a6b7b">그림은 AI가 코드로 그렸습니다</text>
+</svg>
