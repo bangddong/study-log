@@ -412,7 +412,7 @@ q "select count(*) from memo"
 
 
 ```plain text
-# 확인할 줄만 옮겼습니다. 명령이 내는 CREATE TABLE, deleted 같은 줄은 뾈습니다
+# 확인할 줄만 옮겼습니다. 명령이 내는 CREATE TABLE, deleted 같은 줄은 뺐습니다
 427948cd-ef60-4906-897f-fd5c932824c5
 pvc-2eb1025c-9d97-4227-b84c-d20eb9025485
 cd900469-e8d9-462a-bc85-456ebe7fcaba

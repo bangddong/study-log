@@ -349,7 +349,7 @@ postgres 이미지는 `POSTGRES_PASSWORD`를 데이터베이스를 처음 만들
 tofu -chdir=0-bootstrap apply -replace=random_password.db
 kubectl annotate externalsecret app-env force-sync="$(date +%s)" --overwrite
 kubectl rollout restart deploy/app
-sleep 20; kubectl logs deploy/app | grep "Caused by"   # 새 파드가 뜨 때까지 잠깐 기다립니다
+sleep 20; kubectl logs deploy/app | grep "Caused by"   # 새 파드가 뜰 때까지 잠깐 기다립니다
 ```
 
 
